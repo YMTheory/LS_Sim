@@ -3,6 +3,7 @@
 #include "LSRunAction.hh"
 #include "LSEventAction.hh"
 #include "LSTrackingAction.hh"
+#include "LSSteppingAction.hh"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -29,6 +30,7 @@ void LSActionInitialization::Build() const
   SetUserAction(eventAction);
 
   SetUserAction(new LSTrackingAction);
+  SetUserAction(new LSSteppingAction(eventAction));
 
 }  
 

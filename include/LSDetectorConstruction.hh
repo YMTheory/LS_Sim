@@ -29,6 +29,8 @@ class LSDetectorConstruction : public G4VUserDetectorConstruction
         void DefineMaterials();
         G4VPhysicalVolume* DefineVolumes();
 
+        void ModifyOpticalProperty();
+
 
     private:
         G4LogicalVolume* CDConstruction();
@@ -40,6 +42,9 @@ class LSDetectorConstruction : public G4VUserDetectorConstruction
         G4Material* air;
         G4Material* water;
         G4Material* LS;
+
+        G4double coeff_abslen;
+        G4double coeff_rayleigh;
 };
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

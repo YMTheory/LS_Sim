@@ -32,7 +32,6 @@ void LSDetectorSD::Initialize(G4HCofThisEvent* hce)
         = G4SDManager::GetSDMpointer()->GetCollectionID(collectionName[0]);
     hce->AddHitsCollection( hcID, fHitsCollection );
 
-    G4cout << "******************** Sensitive Detector Initialize ******************" << G4endl;
 
 }
 
@@ -41,7 +40,6 @@ G4bool LSDetectorSD::ProcessHits( G4Step* aStep, G4TouchableHistory*)
     G4double edep = aStep->GetTotalEnergyDeposit();
     G4double stepLength = aStep->GetStepLength();
     if(edep == 0. ) return false;
-    G4cout << aStep->GetTrack()->GetTrackID() << " " << edep << " " << stepLength << G4endl;
 
     auto touchable = (aStep->GetPreStepPoint()->GetTouchable());
 

@@ -129,19 +129,6 @@ class DsG4Scintillation : public G4VRestDiscreteProcess
         void SetGammaSlowerRatio(double m_sr) { gammaSlowerRatio = m_sr;}
         double GetGammaSlowerRatio() {return gammaSlowerRatio;}
 
-        // Neutron and proton, Slower Ratio/Time Constant
-        void SetNeutronSlowerTimeConstant(double st) { neutronSlowerTime = st;}
-        double GetNeutronSlowerTimeConstant() {return neutronSlowerTime;}
-
-        void SetNeutronSlowerRatio(double m_sr) { neutronSlowerRatio = m_sr;}
-        double GetNeutronSlowerRatio() {return neutronSlowerRatio;}
-        
-        // Alpha, Slower Ratio/Time Constant
-        void SetAlphaSlowerTimeConstant(double st) { alphaSlowerTime = st;}
-        double GetAlphaSlowerTimeConstant() {return alphaSlowerTime;}
-
-        void SetAlphaSlowerRatio(double m_sr) { alphaSlowerRatio = m_sr;}
-        double GetAlphaSlowerRatio() {return alphaSlowerRatio;}
 
         void SetFlagDecayTimeFast(bool flag) { flagDecayTimeFast = flag; }
         bool GetFlagDecayTimeFast() { return flagDecayTimeFast; }
@@ -197,10 +184,6 @@ protected:
 
         double gammaSlowerTime;
         double gammaSlowerRatio;
-        double neutronSlowerTime;
-        double neutronSlowerRatio;
-        double alphaSlowerTime;
-        double alphaSlowerRatio;
 
         // add flags to enable or disable decay time (fast, slow and so on)
         // -- lintao <lintao@ihep.ac.cn>

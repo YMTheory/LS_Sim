@@ -35,9 +35,10 @@
 
 LSDetectorConstruction::LSDetectorConstruction()
     : G4VUserDetectorConstruction(),
-    fCheckOverlaps(true), air(NULL), water(NULL), LS(NULL)
+    fCheckOverlaps(true), air(NULL), water(NULL), LS(NULL),
+    coeff_abslen(2.862), coeff_rayleigh(0.643)
 { 
-
+;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -57,8 +58,21 @@ G4VPhysicalVolume* LSDetectorConstruction::Construct()
     return DefineVolumes();
 }
 
+void LSDetectorConstruction::ModifyOpticalProperty()
+{
+    for(int i=0; i<497; i++) {
+        GdLSABSLength[i] *= coeff_abslen;
+    }
+
+    for(int i=0; i<11; i++) {
+        GdLSRayLength[i] *= coeff_rayleigh;
+    }
+}
+
 void LSDetectorConstruction::DefineMaterials()
 {
+    ModifyOpticalProperty();
+
     G4String name;
     G4double density;
     G4int compNum;
@@ -161,6 +175,8 @@ void LSDetectorConstruction::DefineMaterials()
     LS -> SetMaterialPropertiesTable(LSMPT);
 
 }
+
+
 
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

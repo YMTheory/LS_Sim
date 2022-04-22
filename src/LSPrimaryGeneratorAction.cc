@@ -40,7 +40,7 @@ void LSPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
     // particle definition
     G4ParticleTable* particleTable = G4ParticleTable::GetParticleTable();
     G4String particleName;
-    G4ParticleDefinition* particle = particleTable->FindParticle(particleName="gamma");
+    G4ParticleDefinition* particle = particleTable->FindParticle(particleName="e-");
     //G4ParticleDefinition* particle = particleTable->FindParticle(particleName="opticalphoton");
 
 
@@ -57,11 +57,11 @@ void LSPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
     mom_z = 1*MeV;
     fParticleGun->SetParticleMomentumDirection( G4ThreeVector(mom_x, mom_y, mom_z));
 
-    G4double pol_x, pol_y, pol_z;
-    pol_x = 1;
-    pol_y = 0;
-    pol_z = 0;
-    fParticleGun->SetParticlePolarization( G4ThreeVector(pol_x, pol_y, pol_z) );
+    //G4double pol_x, pol_y, pol_z;
+    //pol_x = 1;
+    //pol_y = 0;
+    //pol_z = 0;
+    //fParticleGun->SetParticlePolarization( G4ThreeVector(pol_x, pol_y, pol_z) );
 
     fParticleGun->SetParticlePosition(G4ThreeVector(0., 0., 0.));
 

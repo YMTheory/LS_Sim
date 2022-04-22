@@ -33,14 +33,12 @@ using namespace std;
 DsG4Scintillation::DsG4Scintillation(const G4String& processName,
                                      G4ProcessType type)
     : G4VRestDiscreteProcess(processName, type)
-    , doReemission(true)
+    , doReemission(false)
     , doBothProcess(true)
     , doReemissionOnly(false)
     , fEnableQuenching(true)
     , slowerTimeConstant(0) , slowerRatio(0)
     , gammaSlowerTime(0) , gammaSlowerRatio(0)
-    , neutronSlowerTime(0) , neutronSlowerRatio(0)
-    , alphaSlowerTime(0) , alphaSlowerRatio(0)
     , flagDecayTimeFast(true), flagDecayTimeSlow(true)
     , fPhotonWeight(1.0)
     , m_noop(false)
@@ -60,6 +58,7 @@ DsG4Scintillation::DsG4Scintillation(const G4String& processName,
 
     // FORCE reemission only
     doReemissionOnly = true;
+
 }
 
 ////////////////

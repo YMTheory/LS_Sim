@@ -1,5 +1,6 @@
 #include "LSActionInitialization.hh"
 #include "LSPrimaryGeneratorAction.hh"
+#include "LSRunAction.hh"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -18,6 +19,9 @@ LSActionInitialization::~LSActionInitialization()
 void LSActionInitialization::Build() const
 {
   SetUserAction(new LSPrimaryGeneratorAction);
+
+  LSRunAction* runAction = new LSRunAction();
+  SetUserAction(runAction);
   
 }  
 

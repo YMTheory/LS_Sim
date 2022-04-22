@@ -130,9 +130,28 @@ void LSDetectorConstruction::DefineMaterials()
     LSMPT -> AddProperty("ABSLENGTH", GdLSABSEnergy, GdLSABSLength, 497);
     LSMPT -> AddProperty("RAYLEIGH", GdLSRayEnergy, GdLSRayLength, 11);
     LSMPT -> AddProperty("RINDEX", GdLSRefIndexEnergy, GdLSRefIndex, 18) ;
+    LSMPT->AddProperty("FASTCOMPONENT", GdLSComEnergy, GdLSFastComponent, 275);
+    LSMPT->AddProperty("SLOWCOMPONENT", GdLSComEnergy, GdLSFastComponent, 275);
+    LSMPT->AddProperty("REEMISSIONPROB", GdLSReemEnergy, GdLSReem, 28);
+    LSMPT->AddProperty("RAYLEIGH", GdLSRayEnergy, GdLSRayLength, 11);
+    LSMPT->AddProperty("SCINTILLATIONYIELD", component, GdLSLY,2);
+    LSMPT->AddProperty("RESOLUTIONSCALE", component, GdLSResolutionScale,2);
+
+    LSMPT->AddConstProperty("SCINTILLATIONYIELD", GdLSLY[0]);
+    LSMPT->AddConstProperty("RESOLUTIONSCALE",GdLSResolutionScale[0]);
+    LSMPT->AddConstProperty("FASTTIMECONSTANT",GdLSFastTimeConstant[0]);
+    LSMPT->AddConstProperty("SLOWTIMECONSTANT",GdLSSlowTimeConstant[0]);
+    LSMPT->AddConstProperty("YIELDRATIO",GdLSYieldRatio[0]);
+
+    LSMPT->AddProperty("GammaFASTTIMECONSTANT", component, GdLSFastTimeConstant,2);
+    LSMPT->AddProperty("GammaSLOWTIMECONSTANT", component, GdLSSlowTimeConstant,2);
+    LSMPT->AddProperty("GammaYIELDRATIO", component, GdLSYieldRatio,2);
+
+    // add fast/slow time constant for reemission
+    LSMPT->AddProperty("ReemissionFASTTIMECONSTANT", component, GdLSReemissionFastTimeConstant,2);
+    LSMPT->AddProperty("ReemissionSLOWTIMECONSTANT", component, GdLSReemissionSlowTimeConstant,2);
+    LSMPT->AddProperty("ReemissionYIELDRATIO", component, GdLSReemissionYieldRatio,2);
     LS -> SetMaterialPropertiesTable(LSMPT);
-
-
 
 }
 

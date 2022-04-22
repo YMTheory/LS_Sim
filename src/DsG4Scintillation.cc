@@ -186,20 +186,20 @@ DsG4Scintillation::PostStepDoIt(const G4Track& aTrack, const G4Step& aStep)
       slowerTimeConstant = gammaSlowerTime;
       slowerRatio = gammaSlowerRatio;
     }
-    else if(aParticleName == "alpha") {
-      FastTimeConstant = "AlphaFASTTIMECONSTANT";
-      SlowTimeConstant = "AlphaSLOWTIMECONSTANT";
-      strYieldRatio = "AlphaYIELDRATIO";
-      slowerTimeConstant = alphaSlowerTime;
-      slowerRatio = alphaSlowerRatio;
-    }
-    else {
-      FastTimeConstant = "NeutronFASTTIMECONSTANT";
-      SlowTimeConstant = "NeutronSLOWTIMECONSTANT";
-      strYieldRatio = "NeutronYIELDRATIO";
-      slowerTimeConstant = neutronSlowerTime;
-      slowerRatio = neutronSlowerRatio;
-    }
+    //else if(aParticleName == "alpha") {
+    //  FastTimeConstant = "AlphaFASTTIMECONSTANT";
+    //  SlowTimeConstant = "AlphaSLOWTIMECONSTANT";
+    //  strYieldRatio = "AlphaYIELDRATIO";
+    //  slowerTimeConstant = alphaSlowerTime;
+    //  slowerRatio = alphaSlowerRatio;
+    //}
+    //else {
+    //  FastTimeConstant = "NeutronFASTTIMECONSTANT";
+    //  SlowTimeConstant = "NeutronSLOWTIMECONSTANT";
+    //  strYieldRatio = "NeutronYIELDRATIO";
+    //  slowerTimeConstant = neutronSlowerTime;
+    //  slowerRatio = neutronSlowerRatio;
+    //}
 
     const G4MaterialPropertyVector* Fast_Intensity = 
         aMaterialPropertiesTable->GetProperty("FASTCOMPONENT"); 

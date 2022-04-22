@@ -32,23 +32,21 @@ void LSDetectorSD::Initialize(G4HCofThisEvent* hce)
         = G4SDManager::GetSDMpointer()->GetCollectionID(collectionName[0]);
     hce->AddHitsCollection( hcID, fHitsCollection );
 
+    G4cout << "******************** Sensitive Detector Initialize ******************" << G4endl;
 
-    // Create hits
-    //for( G4int i=0; i<fNofPmts+1; i++ )  {
-    //    fHitsCollection->insert(new LSDetectorHit());
-    //}
 }
 
 G4bool LSDetectorSD::ProcessHits( G4Step* aStep, G4TouchableHistory*)
 {
     G4double edep = aStep->GetTotalEnergyDeposit();
     G4double stepLength = aStep->GetStepLength();
-    if(edep == 0. && stepLength == 0. ) return false;
+    G4cout << aStep->GetTrack()->GetTrackID() << " " << edep << " " << stepLength << G4endl;
+    //if(edep == 0. && stepLength == 0. ) return false;
 
     auto touchable = (aStep->GetPreStepPoint()->GetTouchable());
 
     // Get pmt id
-    auto pmtNumber = touchable->GetReplicaNumber(1);
+    //auto pmtNumber = touchable->GetReplicaNumber(1);
 
     LSDetectorHit* hit = new LSDetectorHit();
 
@@ -69,5 +67,9 @@ void LSDetectorSD::EndOfEvent(G4HCofThisEvent*)
             << " hits in the tracker chambers: " << G4endl;
      for ( G4int i=0; i<nofHits; i++ ) (*fHitsCollection)[i]->Print();
   }
+     G4int nofHits = fHitsCollection->entries();
+     G4cout << G4endl
+            << "-------->Hits Collection: in this event they are " << nofHits 
+            << " hits in the tracker chambers: " << G4endl;
 }
 

@@ -1697,3 +1697,18 @@ G4double GdLSRefIndex[18] = {
            0.40
   };
 
+  double AirEnergy[4] = {
+             1.55*eV, 
+             6.20*eV, 
+             10.33*eV,
+             15.5*eV  
+  };
+
+  double AirAbsLength[4] = {
+             10000.0*m,
+             10000.0*m,
+             10000.0*m,
+             10000.0*m
+  };
+
+  double AirRefIndex[4] = {1.000273, 1.000273, 1.000273, 1.000273};

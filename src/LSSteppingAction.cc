@@ -17,5 +17,9 @@ LSSteppingAction::~LSSteppingAction()
 
 void LSSteppingAction::UserSteppingAction(const G4Step* step)
 {
-
+    //G4StepPoint* pre = step->GetPostStepPoint();
+    //if (step->GetTrack()->GetParticleDefinition()->GetParticleName() == "opticalphoton")
+    //{
+    //    G4cout << step->GetTrack()->GetTrackID() << " -> " << pre->GetPosition().x() << " "<< pre->GetPosition().y() << " "<< pre->GetPosition().z() << " " << pre->GetPosition().mag() << G4endl;
+    //}
 }

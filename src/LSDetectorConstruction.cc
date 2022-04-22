@@ -20,6 +20,9 @@
 #include "G4OpBoundaryProcess.hh"
 #include "G4GeometryManager.hh"
 #include "G4SDManager.hh"
+#include "G4MultiFunctionalDetector.hh"
+#include "G4VPrimitiveScorer.hh"
+#include "G4PSDoseDeposit.hh"
 
 #include "OpticalProperty.icc"
 
@@ -71,8 +74,9 @@ void LSDetectorConstruction::DefineMaterials()
     G4NistManager* nist = G4NistManager::Instance();
     air = nist->FindOrBuildMaterial("G4_AIR");
     G4MaterialPropertiesTable* air_mpt = new G4MaterialPropertiesTable();
-    air_mpt -> AddProperty("theAbsorption", photonEnergy, Abs, nEntries);
-    air -> SetMaterialPropertiesTable(air_mpt);
+    air_mpt->AddProperty("RINDEX",    AirEnergy, AirRefIndex,   4);
+    air_mpt->AddProperty("ABSLENGTH", AirEnergy, AirAbsLength,  4);
+    air->SetMaterialPropertiesTable(air_mpt);
 
     // black construction
     black = new G4Material(name="black", density=2.0*g/cm3, compNum=1);

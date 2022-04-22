@@ -29,6 +29,7 @@
 /// \brief Main program of the LS example
 
 #include "LSDetectorConstruction.hh"
+#include "LSPhysicsList.hh"
 #include "LSActionInitialization.hh"
 
 #ifdef G4MULTITHREADED
@@ -75,9 +76,9 @@ int main(int argc,char** argv)
 
   // Physics list
   //auto physicsList = new QBBC;
-  //G4VModularPhysicsList* physicsList = new LSPhysicsList();
-  auto physicsList = new FTFP_BERT;
-  physicsList->SetVerboseLevel(1);
+  G4VModularPhysicsList* physicsList = new LSPhysicsList();
+  //auto physicsList = new FTFP_BERT;
+  physicsList->SetVerboseLevel(0);
   runManager->SetUserInitialization(physicsList);
     
   // User action initialization

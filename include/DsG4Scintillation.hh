@@ -119,28 +119,28 @@ class DsG4Scintillation : public G4VRestDiscreteProcess
         void SetSlowerTimeConstant(double st) {slowerTimeConstant = st;}
         double GetSlowerTimeConstant() {return slowerTimeConstant;}
 
-        void SetSlowerRatio(double sr) {slowerRatio = sr;}
+        void SetSlowerRatio(double m_sr) {slowerRatio = m_sr;}
         double GetSlowerRatio() {return slowerRatio;}
 
         // Gamma, Slower Ratio/Time Constant
         void SetGammaSlowerTimeConstant(double st) { gammaSlowerTime = st;}
         double GetGammaSlowerTimeConstant() {return gammaSlowerTime;}
 
-        void SetGammaSlowerRatio(double sr) { gammaSlowerRatio = sr;}
+        void SetGammaSlowerRatio(double m_sr) { gammaSlowerRatio = m_sr;}
         double GetGammaSlowerRatio() {return gammaSlowerRatio;}
 
         // Neutron and proton, Slower Ratio/Time Constant
         void SetNeutronSlowerTimeConstant(double st) { neutronSlowerTime = st;}
         double GetNeutronSlowerTimeConstant() {return neutronSlowerTime;}
 
-        void SetNeutronSlowerRatio(double sr) { neutronSlowerRatio = sr;}
+        void SetNeutronSlowerRatio(double m_sr) { neutronSlowerRatio = m_sr;}
         double GetNeutronSlowerRatio() {return neutronSlowerRatio;}
         
         // Alpha, Slower Ratio/Time Constant
         void SetAlphaSlowerTimeConstant(double st) { alphaSlowerTime = st;}
         double GetAlphaSlowerTimeConstant() {return alphaSlowerTime;}
 
-        void SetAlphaSlowerRatio(double sr) { alphaSlowerRatio = sr;}
+        void SetAlphaSlowerRatio(double m_sr) { alphaSlowerRatio = m_sr;}
         double GetAlphaSlowerRatio() {return alphaSlowerRatio;}
 
         void SetFlagDecayTimeFast(bool flag) { flagDecayTimeFast = flag; }

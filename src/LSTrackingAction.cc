@@ -12,11 +12,14 @@ LSTrackingAction::~LSTrackingAction()
 
 void LSTrackingAction::PreUserTrackingAction( const G4Track* track )
 {
-    G4cout << track->GetTrackID() << " " << track->GetParentID() << G4endl;
-    if(track->GetCreatorProcess()){
-        const G4VProcess* proc = track->GetCreatorProcess();
-        G4cout << track->GetTrackID() << " " << track->GetParticleDefinition()->GetParticleName() 
-           << " " << G4endl;
+    if (track->GetParentID() == 1) // primary e+-
+    {
+        if (track->GetParticleDefinition()->GetParticleName() == "e+") {
+            G4cout << track->GetKineticEnergy() << "a ";
+        }
+        if (track->GetParticleDefinition()->GetParticleName() == "e-") {
+            G4cout << track->GetKineticEnergy() << "b ";
+        }
     }
 }
 

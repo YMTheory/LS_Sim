@@ -40,7 +40,7 @@ void LSPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
     // particle definition
     G4ParticleTable* particleTable = G4ParticleTable::GetParticleTable();
     G4String particleName;
-    G4ParticleDefinition* particle = particleTable->FindParticle(particleName="e-");
+    G4ParticleDefinition* particle = particleTable->FindParticle(particleName="gamma");
     //G4ParticleDefinition* particle = particleTable->FindParticle(particleName="opticalphoton");
 
 
@@ -48,13 +48,13 @@ void LSPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
     fParticleGun->SetParticleDefinition(particle);
 
     // set optical photon energy/wavelength
-    fParticleGun->SetParticleEnergy(2*MeV);
+    fParticleGun->SetParticleEnergy(8*MeV);
 
     // set momentum direction
     G4double mom_x, mom_y, mom_z ;
     mom_x = 0;
     mom_y = 0;
-    mom_z = 2*MeV;
+    mom_z = 8*MeV;
     fParticleGun->SetParticleMomentumDirection( G4ThreeVector(mom_x, mom_y, mom_z));
 
     G4double pol_x, pol_y, pol_z;

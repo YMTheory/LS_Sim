@@ -21,6 +21,8 @@
 #include "G4GeometryManager.hh"
 #include "G4SDManager.hh"
 
+#include "OpticalProperty.icc"
+
 #include "G4VisAttributes.hh"
 #include "G4Colour.hh"
 
@@ -81,54 +83,54 @@ void LSDetectorConstruction::DefineMaterials()
     water = nist->FindOrBuildMaterial("G4_WATER");
 
     // LS from JUNO
-    //LS = G4Material::GetMaterial("LS", JustWarning);
-    //G4cout << "Material LS is constructed from the codes !" << G4endl;
+    LS = G4Material::GetMaterial("LS", JustWarning);
+    G4cout << "Material LS is constructed from the codes !" << G4endl;
 
-    //G4Element* TS_C_of_Graphite = G4Element::GetElement("TS_C_of_Graphite", JustWarning);
-    //if (not TS_C_of_Graphite) { 
-    //    TS_C_of_Graphite = new G4Element("TS_C_of_Graphite", "C_GRAPHITE" , 6., 12.01*g/mole); 
-    //}
+    G4Element* TS_C_of_Graphite = G4Element::GetElement("TS_C_of_Graphite", JustWarning);
+    if (not TS_C_of_Graphite) { 
+        TS_C_of_Graphite = new G4Element("TS_C_of_Graphite", "C_GRAPHITE" , 6., 12.01*g/mole); 
+    }
 
-    //G4Element* H = G4Element::GetElement("Hydrogen", JustWarning);
-    //if (not H) {
-    //    H = new G4Element("Hydrogen", "H" , 1., 1.01*g/mole);
-    //}
-    //G4Element* TS_H_of_Water = G4Element::GetElement("TS_H_of_Water", JustWarning);
-    //if (not TS_H_of_Water) {
-    //    TS_H_of_Water = new G4Element("TS_H_of_Water", "H_WATER" , 1., 1.01*g/mole);
-    //}
-    //G4Element* TS_H_of_Polyethylene = G4Element::GetElement("TS_H_of_Polyethylene", JustWarning);
-    //if (not TS_H_of_Polyethylene) {
-    //    TS_H_of_Polyethylene = new G4Element("TS_H_of_Polyethylene", "H_POLYETHYLENE" , 1., 1.01*g/mole);
-    //}
-    //
-    //G4Element* O  = G4Element::GetElement("Oxygen", JustWarning);
-    //if (not O) {
-    //    O = new G4Element("Oxygen", "O", 8., 16.00*g/mole); 
-    //}
-    //G4Element* N  = G4Element::GetElement("Nitrogen", JustWarning);
-    //if (not N) {
-    //    N = new G4Element("Nitrogen", "N", 7., 14.01*g/mole);
-    //}
-    //G4Element* S =  G4Element::GetElement("Sulfur", JustWarning);
-    //if (not S) {
-    //    S = new G4Element("Sulfur", "S", 16., 32.066*g/mole);
-    //}
+    G4Element* H = G4Element::GetElement("Hydrogen", JustWarning);
+    if (not H) {
+        H = new G4Element("Hydrogen", "H" , 1., 1.01*g/mole);
+    }
+    G4Element* TS_H_of_Water = G4Element::GetElement("TS_H_of_Water", JustWarning);
+    if (not TS_H_of_Water) {
+        TS_H_of_Water = new G4Element("TS_H_of_Water", "H_WATER" , 1., 1.01*g/mole);
+    }
+    G4Element* TS_H_of_Polyethylene = G4Element::GetElement("TS_H_of_Polyethylene", JustWarning);
+    if (not TS_H_of_Polyethylene) {
+        TS_H_of_Polyethylene = new G4Element("TS_H_of_Polyethylene", "H_POLYETHYLENE" , 1., 1.01*g/mole);
+    }
+    
+    G4Element* O  = G4Element::GetElement("Oxygen", JustWarning);
+    if (not O) {
+        O = new G4Element("Oxygen", "O", 8., 16.00*g/mole); 
+    }
+    G4Element* N  = G4Element::GetElement("Nitrogen", JustWarning);
+    if (not N) {
+        N = new G4Element("Nitrogen", "N", 7., 14.01*g/mole);
+    }
+    G4Element* S =  G4Element::GetElement("Sulfur", JustWarning);
+    if (not S) {
+        S = new G4Element("Sulfur", "S", 16., 32.066*g/mole);
+    }
 
-    //LS  = new G4Material("LS", 0.859*g/cm3, 5);
-    //LS->AddElement(TS_C_of_Graphite,  0.87924);
-    ////LS->AddElement(H,  0.1201);
-    //LS->AddElement(TS_H_of_Water,  0.1201);
-    //LS->AddElement(O,  0.00034);
-    ////LS->AddElement(Gd, 0.0010315);
-    //LS->AddElement(N,  0.00027);
-    //LS->AddElement(S,  0.00005);
-    //
-    //G4MaterialPropertiesTable* LSMPT = new G4MaterialPropertiesTable();
-    //LSMPT -> AddProperty("ABSLENGTH", GdLSABSEnergy, GdLSABSLength, 497);
-    //LSMPT -> AddProperty("RAYLEIGH", GdLSLSEnergy, GdLSLSLength, 11);
-    //LSMPT -> AddProperty("RINDEX", GdLSRefIndexEnergy, GdLSRefIndex, 18) ;
-    //LS -> SetMaterialPropertiesTable(LSMPT);
+    LS  = new G4Material("LS", 0.859*g/cm3, 5);
+    LS->AddElement(TS_C_of_Graphite,  0.87924);
+    //LS->AddElement(H,  0.1201);
+    LS->AddElement(TS_H_of_Water,  0.1201);
+    LS->AddElement(O,  0.00034);
+    //LS->AddElement(Gd, 0.0010315);
+    LS->AddElement(N,  0.00027);
+    LS->AddElement(S,  0.00005);
+    
+    G4MaterialPropertiesTable* LSMPT = new G4MaterialPropertiesTable();
+    LSMPT -> AddProperty("ABSLENGTH", GdLSABSEnergy, GdLSABSLength, 497);
+    LSMPT -> AddProperty("RAYLEIGH", GdLSRayEnergy, GdLSRayLength, 11);
+    LSMPT -> AddProperty("RINDEX", GdLSRefIndexEnergy, GdLSRefIndex, 18) ;
+    LS -> SetMaterialPropertiesTable(LSMPT);
 
 
 
@@ -149,8 +151,7 @@ G4LogicalVolume* LSDetectorConstruction::CDConstruction()
     G4LogicalVolume* logicCell =                         
         new G4LogicalVolume(
                 solidCell,
-                water,
-                // LS, 
+                LS, 
                 // lab,             
                 "logicCell");        
 

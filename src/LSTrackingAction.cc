@@ -13,8 +13,6 @@ LSTrackingAction::~LSTrackingAction()
 
 void LSTrackingAction::PreUserTrackingAction( const G4Track* track )
 {
-    if (track->GetTrackID() != 1)
-    G4cout << track->GetTrackID() << " " << track->GetParticleDefinition()->GetParticleName() << " " << track->GetCreatorProcess()->GetProcessName() << G4endl;
 
     //if (track->GetParentID() == 1) // primary e+-
     //{

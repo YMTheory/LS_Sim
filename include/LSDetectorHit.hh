@@ -24,19 +24,11 @@ class LSDetectorHit : public G4VHit
         virtual void Draw();
         virtual void Print();
 
-        void SetNPE(int npe)        { m_npe = npe; }
-        int GetNPE()                { return m_npe; }
-
-        void SetCerNPE(int npe)     { m_cer_npe = npe; }
-        int GetCerNPE()             { return m_cer_npe; }
-
-        void SetSctNPE(int npe)     { m_sct_npe = npe; }
-        int GetSctNPE()             { return m_sct_npe; }
-
+        void SetTime(double time)       { m_time = time; }
+        double GetTime()                { return m_time; }
+        
     private:
-        int m_npe;
-        int m_cer_npe;
-        int m_sct_npe;
+        int m_time;
 
 };
 

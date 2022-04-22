@@ -48,13 +48,13 @@ void LSPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
     fParticleGun->SetParticleDefinition(particle);
 
     // set optical photon energy/wavelength
-    fParticleGun->SetParticleEnergy(8*MeV);
+    fParticleGun->SetParticleEnergy(1*MeV);
 
     // set momentum direction
     G4double mom_x, mom_y, mom_z ;
     mom_x = 0;
     mom_y = 0;
-    mom_z = 8*MeV;
+    mom_z = 1*MeV;
     fParticleGun->SetParticleMomentumDirection( G4ThreeVector(mom_x, mom_y, mom_z));
 
     G4double pol_x, pol_y, pol_z;

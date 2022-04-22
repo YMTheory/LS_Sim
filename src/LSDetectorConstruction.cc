@@ -3,7 +3,7 @@
 /// \brief Implementation of the LSDetectorConstruction class
 
 #include "LSDetectorConstruction.hh"
-//#include "LSDetectorSD.hh"
+#include "LSDetectorSD.hh"
 
 #include "G4PhysicalConstants.hh"
 #include "G4RunManager.hh"
@@ -70,6 +70,9 @@ void LSDetectorConstruction::DefineMaterials()
     // air construction
     G4NistManager* nist = G4NistManager::Instance();
     air = nist->FindOrBuildMaterial("G4_AIR");
+    G4MaterialPropertiesTable* air_mpt = new G4MaterialPropertiesTable();
+    air_mpt -> AddProperty("theAbsorption", photonEnergy, Abs, nEntries);
+    air -> SetMaterialPropertiesTable(air_mpt);
 
     // black construction
     black = new G4Material(name="black", density=2.0*g/cm3, compNum=1);
@@ -193,7 +196,7 @@ G4LogicalVolume* LSDetectorConstruction::SensDetConstruction()
 
     G4LogicalVolume* logicDet = 
         new G4LogicalVolume(solidSub, 
-                            black,
+                            air,
                             "logicDet");
 
     
@@ -264,33 +267,33 @@ G4VPhysicalVolume* LSDetectorConstruction::DefineVolumes()
     logicCell   ->  SetVisAttributes(boxVisAtt);  // set visualization
     
 
-    //G4LogicalVolume* logicDet = SensDetConstruction();
-    //G4VPhysicalVolume* physDet =
-    //    new G4PVPlacement(0,
-    //                      G4ThreeVector(0,0,0),
-    //                      logicDet,
-    //                      "physDet", 
-    //                      worldLV,
-    //                      false,
-    //                      0,
-    //                      fCheckOverlaps);
-    //logicDet -> SetVisAttributes(detVisAtt);
+    G4LogicalVolume* logicDet = SensDetConstruction();
+    G4VPhysicalVolume* physDet =
+        new G4PVPlacement(0,
+                          G4ThreeVector(0,0,0),
+                          logicDet,
+                          "physDet", 
+                          worldLV,
+                          false,
+                          0,
+                          fCheckOverlaps);
+    logicDet -> SetVisAttributes(detVisAtt);
 
     return worldPV;
 }
 
 
-//void gSDetectorConstruction::ConstructSDandField()
-//{
-//    G4cout << " ----> Add Sensitive Detector " << G4endl;
-//    // Sensitive Detector
-//
-//    auto detectorSD
-//        =  new LSDetectorSD("detectorSD", "PmtHitsCollection"); //fNofLayers);
-//    G4SDManager::GetSDMpointer()->AddNewDetector(detectorSD);
-//    SetSensitiveDetector("logicDet", detectorSD);
-//
-//}
+void LSDetectorConstruction::ConstructSDandField()
+{
+    G4cout << " ----> Add Sensitive Detector " << G4endl;
+    // Sensitive Detector
+
+    auto detectorSD
+        =  new LSDetectorSD("detectorSD", "PmtHitsCollection"); //fNofLayers);
+    G4SDManager::GetSDMpointer()->AddNewDetector(detectorSD);
+    SetSensitiveDetector("logicDet", detectorSD);
+
+}
 
 
 

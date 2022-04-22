@@ -35,7 +35,7 @@
 
 LSDetectorConstruction::LSDetectorConstruction()
     : G4VUserDetectorConstruction(),
-    fCheckOverlaps(true), air(NULL), black(NULL), water(NULL), LS(NULL)
+    fCheckOverlaps(true), air(NULL), water(NULL), LS(NULL)
 { 
 
 }
@@ -66,8 +66,9 @@ void LSDetectorConstruction::DefineMaterials()
     G4int nEntries = 2;
     G4double photonEnergy[2] = {1.55*eV, 15.5*eV};
     G4double rindex[2] = {1.0, 1.0};
-    G4double LSLength[2] = {10000*m, 10000*m};
-    G4double Abs[2] = {1.0, 1.0};
+    G4double RayLength[2] = {10000*m, 10000*m};
+    G4double AbsLength[2] = {0.001*m, 0.001*m};
+    G4double efficiency[2] = {0.27, 0.27};
 
     // Get nist material manager
     // air construction
@@ -78,16 +79,15 @@ void LSDetectorConstruction::DefineMaterials()
     air_mpt->AddProperty("ABSLENGTH", AirEnergy, AirAbsLength,  4);
     air->SetMaterialPropertiesTable(air_mpt);
 
-    // black construction
-    black = new G4Material(name="black", density=2.0*g/cm3, compNum=1);
-    G4MaterialPropertiesTable* black_mpt = new G4MaterialPropertiesTable();
-    black_mpt -> AddProperty("RINDEX", photonEnergy, rindex, nEntries);
-    black_mpt -> AddProperty("RAYLEIGH", photonEnergy, LSLength, nEntries);
-    black_mpt -> AddProperty("theAbsorption", photonEnergy, Abs, nEntries);
-    black -> SetMaterialPropertiesTable(black_mpt);
 
     // Water from Database
     water = nist->FindOrBuildMaterial("G4_WATER");
+    G4MaterialPropertiesTable* water_mpt = new G4MaterialPropertiesTable();
+    water_mpt->AddProperty("RINDEX",    photonEnergy, rindex,   2);
+    water_mpt->AddProperty("ABSLENGTH", photonEnergy, AbsLength,  2);
+    water_mpt->AddProperty("EFFICIENCY", photonEnergy, efficiency,  2);
+    water->SetMaterialPropertiesTable(water_mpt);
+
 
     // LS from JUNO
     LS = G4Material::GetMaterial("LS", JustWarning);
@@ -200,7 +200,7 @@ G4LogicalVolume* LSDetectorConstruction::SensDetConstruction()
 
     G4LogicalVolume* logicDet = 
         new G4LogicalVolume(solidSub, 
-                            air,
+                            water,
                             "logicDet");
 
     

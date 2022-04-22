@@ -39,7 +39,6 @@ class LSDetectorConstruction : public G4VUserDetectorConstruction
 
         G4Material* air;
         G4Material* water;
-        G4Material* black;
         G4Material* LS;
 };
 

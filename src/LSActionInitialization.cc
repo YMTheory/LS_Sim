@@ -2,6 +2,7 @@
 #include "LSPrimaryGeneratorAction.hh"
 #include "LSRunAction.hh"
 #include "LSEventAction.hh"
+#include "LSTrackingAction.hh"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -26,6 +27,8 @@ void LSActionInitialization::Build() const
   
   LSEventAction* eventAction = new LSEventAction();
   SetUserAction(eventAction);
+
+  SetUserAction(new LSTrackingAction);
 
 }  
 

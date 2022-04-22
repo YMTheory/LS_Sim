@@ -244,17 +244,17 @@ G4VPhysicalVolume* LSDetectorConstruction::DefineVolumes()
     logicCell   ->  SetVisAttributes(boxVisAtt);  // set visualization
     
 
-    G4LogicalVolume* logicDet = SensDetConstruction();
-    G4VPhysicalVolume* physDet =
-        new G4PVPlacement(0,
-                          G4ThreeVector(0,0,0),
-                          logicDet,
-                          "physDet", 
-                          worldLV,
-                          false,
-                          0,
-                          fCheckOverlaps);
-    logicDet -> SetVisAttributes(detVisAtt);
+    //G4LogicalVolume* logicDet = SensDetConstruction();
+    //G4VPhysicalVolume* physDet =
+    //    new G4PVPlacement(0,
+    //                      G4ThreeVector(0,0,0),
+    //                      logicDet,
+    //                      "physDet", 
+    //                      worldLV,
+    //                      false,
+    //                      0,
+    //                      fCheckOverlaps);
+    //logicDet -> SetVisAttributes(detVisAtt);
 
     return worldPV;
 }

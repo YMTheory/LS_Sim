@@ -24,11 +24,35 @@ class LSDetectorHit : public G4VHit
         virtual void Draw();
         virtual void Print();
 
-        void SetTime(double time)       { m_time = time; }
-        double GetTime()                { return m_time; }
-        
     private:
-        int m_time;
+        G4double time;
+        G4double edep;
+        G4double wavelength;
+
+        G4bool isFromCerenkov;
+        G4bool isReemission;
+        G4bool isOriginalOP;
+
+
+    public:
+        inline void SetTime(G4double t)             { time = t; }
+        inline G4double GetTime()                   { return time; }
+
+        inline void SetEdep(G4double de)            { edep = de; }
+        inline G4double GetEdep()                   { return edep;}
+        
+        inline void SetWavelength(G4double wl)      { wavelength = wl;}
+        inline G4double GetWavelength()             { return wavelength; }
+
+        void SetFromCerenkov(G4bool flag)           { isFromCerenkov = flag; }
+        G4bool IsFromCerenkov()                     { return isFromCerenkov; }
+
+        void SetReemission(G4bool flag)             { isReemission = flag;}
+        G4bool IsReemission()                       { return isReemission; }
+
+        void SetOriginalOP(G4bool flag)             { isOriginalOP = flag; }
+        G4bool IsOriginalOP()                       { return isOriginalOP; }
+
 
 };
 

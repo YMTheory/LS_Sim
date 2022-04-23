@@ -5,7 +5,7 @@ G4ThreadLocal G4Allocator<LSDetectorHit>* LSDetectorHitAllocator = 0;
 
 LSDetectorHit::LSDetectorHit()
     : G4VHit(),
-      m_time(0)
+      time(0)
 {;}
 
 LSDetectorHit::~LSDetectorHit()
@@ -15,13 +15,17 @@ LSDetectorHit::~LSDetectorHit()
 LSDetectorHit::LSDetectorHit( const LSDetectorHit& right)
     : G4VHit()
 {
-    m_time = right.m_time;
+    time = right.time;
+    edep = right.edep;
+    wavelength = right.wavelength;
 }
 
 
 const LSDetectorHit& LSDetectorHit::operator=(const LSDetectorHit& right)
 {
-    m_time = right.m_time;
+    time = right.time;
+    edep = right.edep;
+    wavelength = right.wavelength;
 
     return *this;
 }
@@ -37,7 +41,7 @@ void LSDetectorHit::Draw()
 
 void LSDetectorHit::Print()
 {
-    G4cout << "Hit Time : " << m_time << G4endl;
+    G4cout << "Hit Time : " << time << G4endl;
 }
 
 

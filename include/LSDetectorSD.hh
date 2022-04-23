@@ -4,6 +4,7 @@
 
 #include "G4VSensitiveDetector.hh"
 #include "LSDetectorHit.hh"
+#include "LSAnalysisManager.hh"
 
 class G4Step;
 class G4HCofThisEvent;
@@ -22,6 +23,7 @@ class LSDetectorSD : public G4VSensitiveDetector
 
     private:
         LSDetectorHitsCollection* fHitsCollection;
+        LSAnalysisManager* analysis;
 };
 
 #endif

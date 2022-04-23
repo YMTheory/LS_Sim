@@ -1,4 +1,3 @@
-
 #include "LSDetectorSD.hh"
 
 #include "G4HCofThisEvent.hh"
@@ -14,6 +13,8 @@ LSDetectorSD::LSDetectorSD( const G4String& name,
     fHitsCollection(NULL)
 {
     collectionName.insert(hitsCollectionName);
+
+    analysis = LSAnalysisManager::getInstance();
 
 }
 
@@ -58,16 +59,16 @@ G4bool LSDetectorSD::ProcessHits( G4Step* aStep, G4TouchableHistory*)
 
 void LSDetectorSD::EndOfEvent(G4HCofThisEvent*)
 {
-  if ( verboseLevel>1 ) { 
-     G4int nofHits = fHitsCollection->entries();
-     G4cout << G4endl
-            << "-------->Hits Collection: in this event they are " << nofHits 
-            << " hits in the tracker chambers: " << G4endl;
-     for ( G4int i=0; i<nofHits; i++ ) (*fHitsCollection)[i]->Print();
-  }
-     G4int nofHits = fHitsCollection->entries();
-     G4cout << G4endl
-            << "-------->Hits Collection: in this event they are " << nofHits 
-            << " hits in the tracker chambers: " << G4endl;
+    G4int nofHits = fHitsCollection->entries();
+    if ( verboseLevel>1 ) { 
+        G4cout << G4endl
+                << "-------->Hits Collection: in this event they are " << nofHits 
+                << " hits in the tracker chambers: " << G4endl;
+         for ( G4int i=0; i<nofHits; i++ ) (*fHitsCollection)[i]->Print();
+    }
+
+    analysis -> analyseTotNPE(nofHits);
+
+
 }
 

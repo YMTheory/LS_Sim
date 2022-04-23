@@ -1,4 +1,5 @@
 #include "LSEventAction.hh"
+#include "LSAnalysisManager.hh"
 
 #include "G4RunManager.hh"
 #include "G4SDManager.hh"
@@ -24,4 +25,9 @@ void LSEventAction::BeginOfEventAction(const G4Event* evt)
 
 void LSEventAction::EndOfEventAction(const G4Event* event)
 {
+    LSAnalysisManager* analysis = LSAnalysisManager::getInstance();
+    G4int evtId = event->GetEventID();
+    analysis -> analyseEventID(evtId);
+
+    analysis -> analyseAddNtupleRow();
 }

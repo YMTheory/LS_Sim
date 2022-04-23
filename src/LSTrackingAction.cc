@@ -1,10 +1,12 @@
 
 #include "LSTrackingAction.hh"
+#include "NormalTrackInfo.hh"
 
 #include "G4Track.hh"
 #include "G4VProcess.hh"
 #include "G4EventManager.hh"
 #include "G4TrackingManager.hh"
+#include "G4OpticalPhoton.hh"
 
 LSTrackingAction::LSTrackingAction()
     : G4UserTrackingAction()
@@ -13,7 +15,7 @@ LSTrackingAction::LSTrackingAction()
 LSTrackingAction::~LSTrackingAction()
 {}
 
-void LSTrackingAction::PreUserTrackingAction( const G4Track* track )
+void LSTrackingAction::PreUserTrackingAction( const G4Track* aTrack )
 {
 
     //if (track->GetParentID() == 1) // primary e+-
@@ -26,10 +28,59 @@ void LSTrackingAction::PreUserTrackingAction( const G4Track* track )
     //    }
     //}
 
+    if(aTrack->GetParentID()==0 and aTrack->GetUserInformation()==0) {
+        NormalTrackInfo* anInfo = new NormalTrackInfo(aTrack);
+        G4Track* theTrack = (G4Track*)aTrack;
+        theTrack->SetUserInformation(anInfo);
+    }
 
 }
 
 void LSTrackingAction::PostUserTrackingAction ( const G4Track* aTrack ) 
 {
+    G4TrackingManager* tm = G4EventManager::GetEventManager() 
+                                            -> GetTrackingManager();
+    G4TrackVector* secondaries = tm->GimmeSecondaries();
+    if(secondaries)
+    {
+        NormalTrackInfo* info = (NormalTrackInfo*)(aTrack->GetUserInformation());
 
+        if (!info) {
+             return;
+        }
+
+        size_t nSeco = secondaries->size();
+        if(nSeco>0)
+        {
+            // loop over all secondaries :
+            for(size_t i=0;i<nSeco;i++)
+            { 
+                NormalTrackInfo* infoNew = new NormalTrackInfo(info);
+
+                // cerenkov photons tag
+                if((*secondaries)[i]->GetCreatorProcess() 
+                   and (*secondaries)[i]->GetCreatorProcess()->GetProcessName() == "Cerenkov" ) {
+                    info->setFromCerenkov();
+                }
+
+                // reemission tag
+                // + parent track is an OP
+                // + secondary is also an OP
+                // + the creator process is Scintillation
+                if (aTrack->GetDefinition()==G4OpticalPhoton::Definition()
+                    and (*secondaries)[i]->GetDefinition() == G4OpticalPhoton::Definition()
+                    and (*secondaries)[i]->GetCreatorProcess()->GetProcessName() == "Scintillation") {
+                    infoNew->setReemission();
+                }
+
+                // original photons tag
+                if (aTrack->GetDefinition() != G4OpticalPhoton::Definition()
+                    and (*secondaries)[i]->GetDefinition() == G4OpticalPhoton::Definition()) {
+                    infoNew->setOriginalOP();
+                }
+
+                (*secondaries)[i] -> SetUserInformation(infoNew);
+            }
+        }
+    } 
 }

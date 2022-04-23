@@ -3,6 +3,8 @@
 
 #include "G4Track.hh"
 #include "G4VProcess.hh"
+#include "G4EventManager.hh"
+#include "G4TrackingManager.hh"
 
 LSTrackingAction::LSTrackingAction()
     : G4UserTrackingAction()
@@ -23,7 +25,11 @@ void LSTrackingAction::PreUserTrackingAction( const G4Track* track )
     //        G4cout << track->GetKineticEnergy() << "b ";
     //    }
     //}
+
+
 }
 
-void LSTrackingAction::PostUserTrackingAction ( const G4Track* ) 
-{;}
+void LSTrackingAction::PostUserTrackingAction ( const G4Track* aTrack ) 
+{
+
+}

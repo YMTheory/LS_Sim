@@ -73,11 +73,6 @@ void LSDetectorConstruction::DefineMaterials()
 {
     ModifyOpticalProperty();
 
-    G4String name;
-    G4double density;
-    G4int compNum;
-
-    G4int nEntries = 2;
     G4double photonEnergy[2] = {1.55*eV, 15.5*eV};
     G4double rindex[2] = {1.0, 1.0};
     G4double RayLength[2] = {10000*m, 10000*m};
@@ -99,6 +94,7 @@ void LSDetectorConstruction::DefineMaterials()
     G4MaterialPropertiesTable* water_mpt = new G4MaterialPropertiesTable();
     water_mpt->AddProperty("RINDEX",    photonEnergy, rindex,   2);
     water_mpt->AddProperty("ABSLENGTH", photonEnergy, AbsLength,  2);
+    water_mpt->AddProperty("RAYLENGTH", photonEnergy, RayLength,  2);
     water_mpt->AddProperty("EFFICIENCY", photonEnergy, efficiency,  2);
     water->SetMaterialPropertiesTable(water_mpt);
 

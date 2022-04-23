@@ -13,6 +13,9 @@ class LSTrackingAction : public G4UserTrackingAction {
 
         void PreUserTrackingAction  (const G4Track* track);
         void PostUserTrackingAction (const G4Track*);
+
+
+
 };
 
 #endif

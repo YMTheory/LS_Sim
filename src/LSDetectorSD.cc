@@ -1,11 +1,15 @@
 #include "LSDetectorSD.hh"
+#include "NormalTrackInfo.hh"
 
 #include "G4HCofThisEvent.hh"
 #include "G4Step.hh"
 #include "G4Track.hh"
+#include "G4StepPoint.hh"
 #include "G4ThreeVector.hh"
 #include "G4SDManager.hh"
 #include "G4ios.hh"
+#include "G4OpticalPhoton.hh"
+#include "G4UnitsTable.hh"
 
 LSDetectorSD::LSDetectorSD( const G4String& name, 
                   const G4String& hitsCollectionName)
@@ -38,14 +42,35 @@ void LSDetectorSD::Initialize(G4HCofThisEvent* hce)
 
 G4bool LSDetectorSD::ProcessHits( G4Step* aStep, G4TouchableHistory*)
 {
+    G4Track* track = aStep->GetTrack();
+    if (track->GetDefinition() != G4OpticalPhoton::Definition()) {
+        return false;
+    }
+    G4StepPoint* preStepPoint = aStep->GetPreStepPoint();
+    G4StepPoint* postStepPoint = aStep->GetPostStepPoint();
+
     G4double edep = aStep->GetTotalEnergyDeposit();
     G4double stepLength = aStep->GetStepLength();
     if(edep == 0. ) return false;
 
-    auto touchable = (aStep->GetPreStepPoint()->GetTouchable());
+    //auto touchable = (aStep->GetPreStepPoint()->GetTouchable());
 
     // Get pmt id
     //auto pmtNumber = touchable->GetReplicaNumber(1);
+    G4double wavelength = 1240. * 1e6 / edep;
+    G4double time = postStepPoint->GetGlobalTime();
+    G4bool is_from_cerenkov = false;
+    G4bool is_reemission = false;
+    G4bool is_original_op = false;
+    G4VUserTrackInformation* trkinfo = track->GetUserInformation();
+    if(trkinfo) {
+        NormalTrackInfo* normaltrk = dynamic_cast<NormalTrackInfo*>(trkinfo);
+        if(normaltrk) {
+            is_from_cerenkov = normaltrk->isFromCerenkov();
+            is_reemission = normaltrk->isReemission();
+            is_original_op = normaltrk->isOriginalOP();
+        }
+    }
 
     LSDetectorHit* hit = new LSDetectorHit();
 

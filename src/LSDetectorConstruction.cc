@@ -10,6 +10,7 @@
 #include "G4NistManager.hh"
 #include "G4Element.hh"
 #include "G4Box.hh"
+#include "G4Tubs.hh"
 #include "G4Sphere.hh"
 #include "G4SubtractionSolid.hh"
 #include "G4LogicalVolume.hh"
@@ -35,7 +36,7 @@
 
 LSDetectorConstruction::LSDetectorConstruction()
     : G4VUserDetectorConstruction(),
-    fCheckOverlaps(true), air(NULL), water(NULL), LS(NULL),
+    fCheckOverlaps(true), air(NULL), water(NULL), LS(NULL), Steel(NULL),
     coeff_abslen(2.862), coeff_rayleigh(0.643)
 { 
 ;
@@ -133,6 +134,11 @@ void LSDetectorConstruction::DefineMaterials()
     if (not S) {
         S = new G4Element("Sulfur", "S", 16., 32.066*g/mole);
     }
+    G4Element* C = G4Element::GetElement("Carbon", JustWarning);
+    if (not C) { 
+        C = new G4Element("Carbon", "C" , 6., 12.01*g/mole); 
+    }
+
 
     LS  = new G4Material("LS", 0.859*g/cm3, 5);
     LS->AddElement(TS_C_of_Graphite,  0.87924);
@@ -170,8 +176,47 @@ void LSDetectorConstruction::DefineMaterials()
     LSMPT->AddProperty("ReemissionYIELDRATIO", component, GdLSReemissionYieldRatio,2);
     LS -> SetMaterialPropertiesTable(LSMPT);
 
-}
+    
+    // PMT Materials :
+    G4double density = 8.1*g/cm3;
+    G4Element* Fe = G4Element::GetElement("Iron", JustWarning);
+    if (not Fe) {
+        Fe = new G4Element("Iron", "Fe", 26., 55.845*g/mole);
+    }
+    G4Element* Ni = G4Element::GetElement("Ni", JustWarning);
+    if (not Ni) {
+        Ni = new G4Element("Ni", "Ni", 28, 58.6934*g/mole);
+    }
+    G4Element* Cr = G4Element::GetElement("Cr", JustWarning);
+    if (not Cr) {
+        Cr = new G4Element("Cr", "Cr", 24, 51.9961*g/mole);
+    }
+    G4Element* Mn = G4Element::GetElement("Mn", JustWarning);
+    if (not Mn) {
+        Mn = new G4Element("Mn", "Mn", 25, 54.9381*g/mole);
+    }
+    G4Element* P =  G4Element::GetElement("Phosphorus", JustWarning);
+    if (not P) {
+        P = new G4Element("Phosphorus", "P", 15, 30.9738*g/mole);
+    }
+    G4Element* Si = G4Element::GetElement("Silicon", JustWarning);
+    if (not Si) {
+        Si = new G4Element("Silicon", "Si", 14., 28.09*g/mole);
+    }
+    
+    Steel = new G4Material("Steel", density, 8);
+    Steel->AddElement(Fe, 0.70845);
+    Steel->AddElement(C, 0.0008);
+    Steel->AddElement(Mn, 0.02);
+    Steel->AddElement(P, 0.00045);
+    Steel->AddElement(S, 0.00030);
+    Steel->AddElement(Si, 0.01);
+    Steel->AddElement(Cr, 0.18);
+    Steel->AddElement(Ni, 0.08);
+    G4MaterialPropertiesTable* SteelMPT = new G4MaterialPropertiesTable();
+      
 
+}
 
 
 
@@ -212,7 +257,7 @@ G4LogicalVolume* LSDetectorConstruction::SensDetConstruction()
 
     G4LogicalVolume* logicDet = 
         new G4LogicalVolume(solidSub, 
-                            water,
+                            Steel,
                             "logicDet");
 
     
@@ -220,6 +265,25 @@ G4LogicalVolume* LSDetectorConstruction::SensDetConstruction()
 
     return logicDet;
 }
+
+G4LogicalVolume* LSDetectorConstruction::PmtConstruction()
+{
+    G4Tubs* pmttube_solid = new G4Tubs("pmttube_solid", 
+                                   0*mm,
+                                   254*mm,
+                                   150*mm,
+                                   0*deg,
+                                   360*deg);
+    G4LogicalVolume* pmttube_logic = 
+        new G4LogicalVolume(pmttube_solid, 
+                            Steel,
+                            "pmttube_logic" );
+
+    return pmttube_logic;
+}
+
+
+
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -252,7 +316,7 @@ G4VPhysicalVolume* LSDetectorConstruction::DefineVolumes()
         = new G4LogicalVolume(
                      worldS,   //its solid
                      //air,      //its material
-                     air,
+                     water,
                      "World"); //its name
   
     G4VPhysicalVolume* worldPV

@@ -1,16 +1,16 @@
-#include "SimplePMT_Solid.hh"
+#include "SimplePMT_Manager.hh"
 
 #include "G4Tubs.hh"
 #include "G4SystemOfUnits.hh"
 
-SimplePMT_Solid::SimplePMT_Solid()
+SimplePMT_Manager::SimplePMT_Manager()
 {;}
 
-SimplePMT_Solid::~SimplePMT_Solid()
+SimplePMT_Manager::~SimplePMT_Manager()
 {;}
 
 G4VSolid*
-SimplePMT_Solid::GetSolid(G4String solidname, double thickness)
+SimplePMT_Manager::GetSolid(G4String solidname, double thickness)
 {
     m_R = 254*mm;
     m_H = 150*mm;

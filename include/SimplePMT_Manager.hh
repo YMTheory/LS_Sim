@@ -1,15 +1,15 @@
-#ifndef SimplePMT_Solid_h
-#define SimplePMT_Solid_h 1
+#ifndef SimplePMT_Manager_h
+#define SimplePMT_Manager_h 1
 
 #include "globals.hh"
 #include "G4SystemOfUnits.hh"
 class G4VSolid;
 
-class SimplePMT_Solid
+class SimplePMT_Manager
 {
     public:
-        SimplePMT_Solid();
-        ~SimplePMT_Solid();
+        SimplePMT_Manager();
+        ~SimplePMT_Manager();
 
         G4VSolid* GetSolid(G4String solidname, double thickness=0.0);
 

@@ -14,6 +14,7 @@
 class G4VPhysicalVolume;
 class G4LogicalVolume;
 class G4Material;
+class G4OpticalSurface;
 
 /// Detector construction class to define materials and geometry.
 
@@ -35,6 +36,7 @@ class LSDetectorConstruction : public G4VUserDetectorConstruction
     private:
         G4LogicalVolume* CDConstruction();
         G4LogicalVolume* SensDetConstruction();
+        G4LogicalVolume* PmtConstruction();
 
     private:
         G4bool fCheckOverlaps;
@@ -42,6 +44,10 @@ class LSDetectorConstruction : public G4VUserDetectorConstruction
         G4Material* air;
         G4Material* water;
         G4Material* LS;
+        G4Material* Steel;
+        
+        G4OpticalSurface* m_mirror_opsurf;
+        G4OpticalSurface* Photocathode_opsurf;
 
         G4double coeff_abslen;
         G4double coeff_rayleigh;

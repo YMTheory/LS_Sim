@@ -10,6 +10,7 @@ NormalTrackInfo::NormalTrackInfo()
 {
     from_cerenkov =false;
     is_reemission =false;
+    m_op_is_original_op = false;
 }
 
 NormalTrackInfo::NormalTrackInfo(const G4Track* aTrack)

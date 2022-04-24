@@ -25,6 +25,7 @@ class LSDetectorHit : public G4VHit
         virtual void Print();
 
     private:
+        G4double trackID;
         G4double time;
         G4double edep;
         G4double wavelength;
@@ -35,6 +36,9 @@ class LSDetectorHit : public G4VHit
 
 
     public:
+        inline void SetTrackID(G4int tid)           { trackID = tid; }
+        inline G4int GetTrackID()                   { return trackID; }
+
         inline void SetTime(G4double t)             { time = t; }
         inline G4double GetTime()                   { return time; }
 

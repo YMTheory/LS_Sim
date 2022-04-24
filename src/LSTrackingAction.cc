@@ -55,20 +55,22 @@ void LSTrackingAction::PostUserTrackingAction ( const G4Track* aTrack )
             // loop over all secondaries :
             for(size_t i=0;i<nSeco;i++)
             { 
+                //NormalTrackInfo* infoNew = new NormalTrackInfo();
                 NormalTrackInfo* infoNew = new NormalTrackInfo(info);
 
                 // cerenkov photons tag
                 if((*secondaries)[i]->GetCreatorProcess() 
+                   and (*secondaries)[i]->GetDefinition() == G4OpticalPhoton::Definition()
                    and (*secondaries)[i]->GetCreatorProcess()->GetProcessName() == "Cerenkov" ) {
-                    info->setFromCerenkov();
+                    infoNew->setFromCerenkov();
                 }
 
                 // reemission tag
                 // + parent track is an OP
                 // + secondary is also an OP
                 // + the creator process is Scintillation
-                if (aTrack->GetDefinition()==G4OpticalPhoton::Definition()
-                    and (*secondaries)[i]->GetDefinition() == G4OpticalPhoton::Definition()
+                if (//aTrack->GetDefinition()==G4OpticalPhoton::Definition() and
+                    (*secondaries)[i]->GetDefinition() == G4OpticalPhoton::Definition()
                     and (*secondaries)[i]->GetCreatorProcess()->GetProcessName() == "Scintillation") {
                     infoNew->setReemission();
                 }
@@ -83,4 +85,17 @@ void LSTrackingAction::PostUserTrackingAction ( const G4Track* aTrack )
             }
         }
     } 
+    
+    // outputs:
+    //if (aTrack->GetDefinition() == G4OpticalPhoton::Definition()) {
+    //    NormalTrackInfo* info = (NormalTrackInfo*)(aTrack->GetUserInformation()) ;
+    //    G4cout << "PostTrackId = " << aTrack->GetTrackID() << " and parent ID = " << aTrack->GetParentID() 
+    //           << " creator process is " << aTrack->GetCreatorProcess()->GetProcessName()
+    //           << " is Original Photon ---> " << info->isOriginalOP() 
+    //           << " is Cerenkov Photon ---> " << info->isFromCerenkov()
+    //           << " is Scintillation Photon ---> " << info->isReemission()
+    //           << G4endl;
+    //}
+
+
 }

@@ -33,7 +33,7 @@ using namespace std;
 DsG4Scintillation::DsG4Scintillation(const G4String& processName,
                                      G4ProcessType type)
     : G4VRestDiscreteProcess(processName, type)
-    , doReemission(false)
+    , doReemission(true)
     , doBothProcess(true)
     , doReemissionOnly(false)
     , fEnableQuenching(true)

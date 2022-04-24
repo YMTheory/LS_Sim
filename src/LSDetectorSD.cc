@@ -43,6 +43,7 @@ void LSDetectorSD::Initialize(G4HCofThisEvent* hce)
 G4bool LSDetectorSD::ProcessHits( G4Step* aStep, G4TouchableHistory*)
 {
     G4Track* track = aStep->GetTrack();
+    G4int trackID = track->GetTrackID();
     if (track->GetDefinition() != G4OpticalPhoton::Definition()) {
         return false;
     }
@@ -73,6 +74,13 @@ G4bool LSDetectorSD::ProcessHits( G4Step* aStep, G4TouchableHistory*)
     }
 
     LSDetectorHit* hit = new LSDetectorHit();
+    hit->SetTrackID(trackID);
+    hit->SetTime(time);
+    hit->SetEdep(edep);
+    hit->SetWavelength(wavelength);
+    hit->SetFromCerenkov(is_from_cerenkov);
+    hit->SetReemission(is_reemission);
+    hit->SetOriginalOP(is_original_op);
 
     fHitsCollection->insert(hit);
 
@@ -85,15 +93,26 @@ G4bool LSDetectorSD::ProcessHits( G4Step* aStep, G4TouchableHistory*)
 void LSDetectorSD::EndOfEvent(G4HCofThisEvent*)
 {
     G4int nofHits = fHitsCollection->entries();
-    if ( verboseLevel>1 ) { 
-        G4cout << G4endl
-                << "-------->Hits Collection: in this event they are " << nofHits 
-                << " hits in the tracker chambers: " << G4endl;
-         for ( G4int i=0; i<nofHits; i++ ) (*fHitsCollection)[i]->Print();
+    G4int nofCerHits = 0;
+    G4int nofSctHits = 0;
+    G4int nofOP = 0;
+    for ( G4int i=0; i<nofHits; i++ ) {
+       if ((*fHitsCollection)[i]->IsFromCerenkov()) nofCerHits += 1;
+       if ((*fHitsCollection)[i]->IsReemission())   nofSctHits += 1;
+       if ((*fHitsCollection)[i]->IsOriginalOP())   nofOP += 1;
+       //(*fHitsCollection)[i] -> Print();
     }
+         //for ( G4int i=0; i<nofHits; i++ ) (*fHitsCollection)[i]->Print();
+
+    //G4cout << "======= Total " << nofHits << " hits have been detected with " 
+    //       << nofCerHits << " Cerenkov hits and " 
+    //       << nofSctHits << " Scintillation hits, the original photons are "  
+    //       << nofOP << " ======= !"
+    //       << G4endl;
 
     analysis -> analyseTotNPE(nofHits);
-
+    analysis -> analyseCerNPE(nofCerHits);
+    analysis -> analyseSctNPE(nofSctHits);
 
 }
 

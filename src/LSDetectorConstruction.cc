@@ -18,6 +18,7 @@
 #include "G4SystemOfUnits.hh"
 #include "G4SubtractionSolid.hh"
 #include "G4LogicalBorderSurface.hh"
+#include "G4LogicalSkinSurface.hh"
 #include "G4OpBoundaryProcess.hh"
 #include "G4GeometryManager.hh"
 #include "G4SDManager.hh"
@@ -217,7 +218,8 @@ void LSDetectorConstruction::DefineMaterials()
     G4double SteelEnergy[4] = {1.55*eV, 6.20*eV, 10.33*eV, 15.5*eV};
     G4double SteelAbsLength[4] = {1e-3*mm, 1e-3*mm, 1e-3*mm, 1e-3*mm};
     G4double SteelRefIdx[4] = {1, 1, 1, 1};   // refractive index of Steel... fake
-    Steel_mpt->AddProperty("RINDEX", SteelEnergy, SteelRefIdx, 4);
+    //Steel_mpt->AddProperty("RINDEX", SteelEnergy, SteelRefIdx, 4);
+    Steel_mpt->AddProperty("RINDEX", fPP_Water_RIN, fWaterRINDEX, 36);
     Steel_mpt->AddProperty("ABSLENGTH", SteelEnergy, SteelAbsLength,  4);
     Steel->SetMaterialPropertiesTable(Steel_mpt);
       
@@ -391,9 +393,9 @@ G4VPhysicalVolume* LSDetectorConstruction::DefineVolumes()
     logicDet -> SetVisAttributes(detVisAtt);
 
     // Optical surface :
-    new G4LogicalBorderSurface("photocathode_logsurf", 
-                            physDet, worldPV,
-                            Photocathode_opsurf);
+    //new G4LogicalSkinSurface("photocathode_logsurf", 
+    //                        logicDet,
+    //                        Photocathode_opsurf);
 
 
     return worldPV;

@@ -24,6 +24,9 @@ class LSDetectorSD : public G4VSensitiveDetector
     private:
         LSDetectorHitsCollection* fHitsCollection;
         LSAnalysisManager* analysis;
+
+    private:
+        G4double efficiency;
 };
 
 #endif

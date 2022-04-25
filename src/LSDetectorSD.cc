@@ -10,11 +10,13 @@
 #include "G4ios.hh"
 #include "G4OpticalPhoton.hh"
 #include "G4UnitsTable.hh"
+#include "G4VProcess.hh"
 
 LSDetectorSD::LSDetectorSD( const G4String& name, 
                   const G4String& hitsCollectionName)
     : G4VSensitiveDetector(name),
-    fHitsCollection(NULL)
+    fHitsCollection(NULL),
+    efficiency(0.3)
 {
     collectionName.insert(hitsCollectionName);
 
@@ -52,12 +54,19 @@ G4bool LSDetectorSD::ProcessHits( G4Step* aStep, G4TouchableHistory*)
 
     G4double edep = aStep->GetTotalEnergyDeposit();
     G4double stepLength = aStep->GetStepLength();
+    if(0) {
+        G4cout << "physDetTrack ID " << trackID 
+               << ", PreStep radius "  << preStepPoint->GetPosition().mag()  << " " << preStepPoint->GetStepStatus()  << " "<< preStepPoint->GetProcessDefinedStep()->GetProcessName()
+               << ", PostStep radius " << postStepPoint->GetPosition().mag() << " " << postStepPoint->GetStepStatus() << " "<< postStepPoint->GetProcessDefinedStep()->GetProcessName()
+               << ", edep = " << edep 
+               << ", stepLength = " << stepLength
+               << G4endl;
+    }
     if(edep == 0. ) return false;
+
 
     //auto touchable = (aStep->GetPreStepPoint()->GetTouchable());
 
-    // Get pmt id
-    //auto pmtNumber = touchable->GetReplicaNumber(1);
     G4double wavelength = 1240. * 1e6 / edep;
     G4double time = postStepPoint->GetGlobalTime();
     G4bool is_from_cerenkov = false;
@@ -71,6 +80,12 @@ G4bool LSDetectorSD::ProcessHits( G4Step* aStep, G4TouchableHistory*)
             is_reemission = normaltrk->isReemission();
             is_original_op = normaltrk->isOriginalOP();
         }
+    }
+
+    // consider PMT PDE :  no wavelength response and angular response yet
+    G4double pde = G4UniformRand();
+    if (pde > efficiency) {
+        return false;
     }
 
     LSDetectorHit* hit = new LSDetectorHit();

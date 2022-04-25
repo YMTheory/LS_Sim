@@ -4,6 +4,10 @@
 #include "Randomize.hh"
 #include "G4ParticleDefinition.hh"
 #include "G4SystemOfUnits.hh"
+#include "Randomize.hh"
+#include "G4ParticleTable.hh"
+#include "G4PrimaryParticle.hh"
+#include "G4PhysicalConstants.hh"
 
 LSParticleSource::LSParticleSource() {
     m_particle          = NULL;
@@ -35,7 +39,32 @@ void LSParticleSource::SetMomentumType(G4String type)
 
 void LSParticleSource::GenerateIsotropicFlux()
 {
-    
+    G4double rndm, rndm2;
+    G4double px, py, pz;
+
+    G4double sintheta, sinphi, costheta, cosphi;
+    rndm = G4UniformRand();
+    costheta = -1 + rndm * 2;
+    sintheta = std::sqrt(1. - costheta*costheta);
+
+    rndm2 = G4UniformRand();
+    G4double Phi = 2 * pi * rndm2; 
+    sinphi = std::sin(Phi);
+    cosphi = std::cos(Phi);
+
+    px = -sintheta * cosphi;
+    py = -sintheta * sinphi;
+    pz = -costheta;
+
+    G4double ResMag = std::sqrt((px*px) + (py*py) + (pz*pz));
+    px = px/ResMag;
+    py = py/ResMag;
+    pz = pz/ResMag;
+
+    m_Mom.setX(px);
+    m_Mom.setY(py);
+    m_Mom.setZ(pz);
+
 }
 
 void LSParticleSource::SetParticleMomentum(G4ThreeVector mom)
@@ -53,6 +82,10 @@ void LSParticleSource::GeneratePrimaryVertex(G4Event* event)
     if(m_particle == NULL) {
         G4cout << "No particle has been defined !" << G4endl;
         return;
+    }
+
+    if(m_MomType == "iso") {
+        GenerateIsotropicFlux();
     }
 
     G4PrimaryVertex* vertex = new G4PrimaryVertex(m_pos, 0);

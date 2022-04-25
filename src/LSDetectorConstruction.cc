@@ -213,7 +213,11 @@ void LSDetectorConstruction::DefineMaterials()
     Steel->AddElement(Si, 0.01);
     Steel->AddElement(Cr, 0.18);
     Steel->AddElement(Ni, 0.08);
-    G4MaterialPropertiesTable* SteelMPT = new G4MaterialPropertiesTable();
+    G4MaterialPropertiesTable* Steel_mpt = new G4MaterialPropertiesTable();
+    G4double SteelEnergy[4] = {1.55*eV, 6.20*eV, 10.33*eV, 15.5*eV};
+    G4double SteelAbsLength[4] = {1e-3*mm, 1e-3*mm, 1e-3*mm, 1e-3*mm};
+    Steel_mpt->AddProperty("ABSLENGTH", SteelEnergy, SteelAbsLength,  4);
+    Steel->SetMaterialPropertiesTable(Steel_mpt);
       
 
 }

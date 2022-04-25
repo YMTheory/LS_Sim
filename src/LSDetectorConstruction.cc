@@ -91,12 +91,23 @@ void LSDetectorConstruction::DefineMaterials()
 
 
     // Water from Database
-    water = nist->FindOrBuildMaterial("G4_WATER");
+    G4Element* H = G4Element::GetElement("Hydrogen", JustWarning);
+    if (not H) {
+        H = new G4Element("Hydrogen", "H" , 1., 1.01*g/mole);
+    }
+    G4Element* O  = G4Element::GetElement("Oxygen", JustWarning);
+    if (not O) {
+        O = new G4Element("Oxygen", "O", 8., 16.00*g/mole); 
+    }
+
+    G4double density= 1.000*g/cm3;
+    water = new G4Material("water", density, 2);
+    water->AddElement(H,2);
+    water->AddElement(O,1);
+    G4MaterialPropertiesTable* WaterMPT = new G4MaterialPropertiesTable();
     G4MaterialPropertiesTable* water_mpt = new G4MaterialPropertiesTable();
-    water_mpt->AddProperty("RINDEX",    photonEnergy, rindex,   2);
-    water_mpt->AddProperty("ABSLENGTH", photonEnergy, AbsLength,  2);
-    water_mpt->AddProperty("RAYLENGTH", photonEnergy, RayLength,  2);
-    water_mpt->AddProperty("EFFICIENCY", photonEnergy, efficiency,  2);
+    water_mpt->AddProperty("RINDEX", fPP_Water_RIN, fWaterRINDEX, 36);
+    water_mpt->AddProperty("ABSLENGTH", fPP_Water_ABS, fWaterABSORPTION,  316);
     water->SetMaterialPropertiesTable(water_mpt);
 
 
@@ -109,10 +120,6 @@ void LSDetectorConstruction::DefineMaterials()
         TS_C_of_Graphite = new G4Element("TS_C_of_Graphite", "C_GRAPHITE" , 6., 12.01*g/mole); 
     }
 
-    G4Element* H = G4Element::GetElement("Hydrogen", JustWarning);
-    if (not H) {
-        H = new G4Element("Hydrogen", "H" , 1., 1.01*g/mole);
-    }
     G4Element* TS_H_of_Water = G4Element::GetElement("TS_H_of_Water", JustWarning);
     if (not TS_H_of_Water) {
         TS_H_of_Water = new G4Element("TS_H_of_Water", "H_WATER" , 1., 1.01*g/mole);
@@ -122,10 +129,6 @@ void LSDetectorConstruction::DefineMaterials()
         TS_H_of_Polyethylene = new G4Element("TS_H_of_Polyethylene", "H_POLYETHYLENE" , 1., 1.01*g/mole);
     }
     
-    G4Element* O  = G4Element::GetElement("Oxygen", JustWarning);
-    if (not O) {
-        O = new G4Element("Oxygen", "O", 8., 16.00*g/mole); 
-    }
     G4Element* N  = G4Element::GetElement("Nitrogen", JustWarning);
     if (not N) {
         N = new G4Element("Nitrogen", "N", 7., 14.01*g/mole);
@@ -178,7 +181,7 @@ void LSDetectorConstruction::DefineMaterials()
 
     
     // PMT Materials :
-    G4double density = 8.1*g/cm3;
+    density = 8.1*g/cm3;
     G4Element* Fe = G4Element::GetElement("Iron", JustWarning);
     if (not Fe) {
         Fe = new G4Element("Iron", "Fe", 26., 55.845*g/mole);

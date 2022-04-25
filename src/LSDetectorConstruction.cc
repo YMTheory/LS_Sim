@@ -74,12 +74,6 @@ void LSDetectorConstruction::DefineMaterials()
 {
     ModifyOpticalProperty();
 
-    G4double photonEnergy[2] = {1.55*eV, 15.5*eV};
-    G4double rindex[2] = {1.0, 1.0};
-    G4double RayLength[2] = {10000*m, 10000*m};
-    G4double AbsLength[2] = {0.001*m, 0.001*m};
-    G4double efficiency[2] = {0.27, 0.27};
-
     // Get nist material manager
     // air construction
     G4NistManager* nist = G4NistManager::Instance();
@@ -218,6 +212,8 @@ void LSDetectorConstruction::DefineMaterials()
     G4MaterialPropertiesTable* Steel_mpt = new G4MaterialPropertiesTable();
     G4double SteelEnergy[4] = {1.55*eV, 6.20*eV, 10.33*eV, 15.5*eV};
     G4double SteelAbsLength[4] = {1e-3*mm, 1e-3*mm, 1e-3*mm, 1e-3*mm};
+    G4double SteelRefIdx[4] = {1, 1, 1, 1};   // refractive index of Steel... fake
+    Steel_mpt->AddProperty("RINDEX", SteelEnergy, SteelRefIdx, 4);
     Steel_mpt->AddProperty("ABSLENGTH", SteelEnergy, SteelAbsLength,  4);
     Steel->SetMaterialPropertiesTable(Steel_mpt);
       
@@ -240,6 +236,11 @@ void LSDetectorConstruction::DefineMaterials()
     PhotocathodeMPT->AddProperty("REFLECTIVITY", fPhCEnergy, fPhCREFLECTIVITY, 4);
     PhotocathodeMPT->AddProperty("EFFICIENCY", fPP_PhCQE_Dynode20inch, fPhCEFFICIENCY_Dynode20inch, 43);
     Photocathode_mat -> SetMaterialPropertiesTable(PhotocathodeMPT);
+
+    Photocathode_opsurf = new G4OpticalSurface("Photocathode_opsurf");
+    Photocathode_opsurf->SetType(dielectric_metal); // ignored if RINDEX defined
+    Photocathode_opsurf->SetFinish(polished);
+    Photocathode_opsurf->SetMaterialPropertiesTable(G4Material::GetMaterial("photocathode")->GetMaterialPropertiesTable() );
 
 
 }
@@ -384,6 +385,12 @@ G4VPhysicalVolume* LSDetectorConstruction::DefineVolumes()
                           0,
                           fCheckOverlaps);
     logicDet -> SetVisAttributes(detVisAtt);
+
+    // Optical surface :
+    new G4LogicalBorderSurface("photocathode_logsurf", 
+                            physDet, worldPV,
+                            Photocathode_opsurf);
+
 
     return worldPV;
 }

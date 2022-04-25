@@ -52,7 +52,6 @@ G4bool LSDetectorSD::ProcessHits( G4Step* aStep, G4TouchableHistory*)
 
     G4double edep = aStep->GetTotalEnergyDeposit();
     G4double stepLength = aStep->GetStepLength();
-    G4cout << trackID << " " << edep << " " << stepLength << G4endl;
     if(edep == 0. ) return false;
 
     //auto touchable = (aStep->GetPreStepPoint()->GetTouchable());

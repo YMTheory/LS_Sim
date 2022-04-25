@@ -1,8 +1,5 @@
-//
-/// \file LSPrimaryGeneratorAction.cc
-/// \brief Implementation of the LSPrimaryGeneratorAction class
-
 #include "LSPrimaryGeneratorAction.hh"
+#include "LSParticleSource.hh"
 
 #include "G4Event.hh"
 #include "G4RunManager.hh"
@@ -17,8 +14,9 @@
 LSPrimaryGeneratorAction::LSPrimaryGeneratorAction()
 : G4VUserPrimaryGeneratorAction()
 {
-    fParticleGun      = new G4ParticleGun();
+    //fParticleGun      = new G4ParticleGun();
 
+    fParticleGun    = new LSParticleSource();
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -33,6 +31,17 @@ LSPrimaryGeneratorAction::~LSPrimaryGeneratorAction()
 void LSPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 {
     
+    fParticleGun = new LSParticleSource();
+    G4ParticleTable* particleTable = G4ParticleTable::GetParticleTable();
+    G4String particleName;
+    G4ParticleDefinition* particle = particleTable->FindParticle(particleName="e-");
+    fParticleGun->SetParticleDefinition(particle);
+    fParticleGun->SetKineticEnergy(1.0*MeV);
+    fParticleGun->SetPosition(G4ThreeVector(0, 0, 0));
+    fParticleGun->GeneratePrimaryVertex( anEvent );
+
+
+    /*
     // Generate more than one particle each time
     G4int NumberOfParticlesToBeGenerated = 1;
     fParticleGun = new G4ParticleGun(NumberOfParticlesToBeGenerated);
@@ -66,7 +75,7 @@ void LSPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
     fParticleGun->SetParticlePosition(G4ThreeVector(0., 0., 0.));
 
     fParticleGun->GeneratePrimaryVertex( anEvent );
-     
+    */
 
 }
 

@@ -37,7 +37,7 @@
 LSDetectorConstruction::LSDetectorConstruction()
     : G4VUserDetectorConstruction(),
     fCheckOverlaps(true), air(NULL), water(NULL), LS(NULL), Steel(NULL),
-    coeff_abslen(2.862), coeff_rayleigh(0.643)
+    coeff_abslen(2.862), coeff_rayleigh(0.643), coeff_efficiency(0.5)
 { 
 ;
 }
@@ -67,6 +67,10 @@ void LSDetectorConstruction::ModifyOpticalProperty()
 
     for(int i=0; i<11; i++) {
         GdLSRayLength[i] *= coeff_rayleigh;
+    }
+
+    for(int i=0; i<43; i++) {
+        fPhCEFFICIENCY_Dynode20inch[i] *= coeff_efficiency;
     }
 }
 

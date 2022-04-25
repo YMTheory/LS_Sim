@@ -52,6 +52,7 @@ class LSDetectorConstruction : public G4VUserDetectorConstruction
 
         G4double coeff_abslen;
         G4double coeff_rayleigh;
+        G4double coeff_efficiency;
 };
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

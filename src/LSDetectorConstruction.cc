@@ -104,7 +104,6 @@ void LSDetectorConstruction::DefineMaterials()
     water = new G4Material("water", density, 2);
     water->AddElement(H,2);
     water->AddElement(O,1);
-    G4MaterialPropertiesTable* WaterMPT = new G4MaterialPropertiesTable();
     G4MaterialPropertiesTable* water_mpt = new G4MaterialPropertiesTable();
     water_mpt->AddProperty("RINDEX", fPP_Water_RIN, fWaterRINDEX, 36);
     water_mpt->AddProperty("ABSLENGTH", fPP_Water_ABS, fWaterABSORPTION,  316);
@@ -181,7 +180,6 @@ void LSDetectorConstruction::DefineMaterials()
 
     
     // PMT Materials :
-    density = 8.1*g/cm3;
     G4Element* Fe = G4Element::GetElement("Iron", JustWarning);
     if (not Fe) {
         Fe = new G4Element("Iron", "Fe", 26., 55.845*g/mole);
@@ -207,6 +205,7 @@ void LSDetectorConstruction::DefineMaterials()
         Si = new G4Element("Silicon", "Si", 14., 28.09*g/mole);
     }
     
+    density = 8.1*g/cm3;
     Steel = new G4Material("Steel", density, 8);
     Steel->AddElement(Fe, 0.70845);
     Steel->AddElement(C, 0.0008);
@@ -222,6 +221,26 @@ void LSDetectorConstruction::DefineMaterials()
     Steel_mpt->AddProperty("ABSLENGTH", SteelEnergy, SteelAbsLength,  4);
     Steel->SetMaterialPropertiesTable(Steel_mpt);
       
+    density = 5. *g/cm3; // true??
+    G4Element* K =  G4Element::GetElement("Potassium", JustWarning);
+    if (not K) {
+        K = new G4Element("Potassium", "K", 19., 39.0983*g/mole);
+    }
+    Photocathode_mat = new G4Material("photocathode",density,1);
+    Photocathode_mat->AddElement(K, 1);
+    
+    G4double fPhCEnergy[4] = {1.55*eV, 6.20*eV, 10.33*eV, 15.5*eV};
+    G4double fPhCRINDEX[4] = {2.9, 2.9, 2.9, 2.9};
+    G4double fPhCKINDEX[4] = {1.6, 1.6, 1.6, 1.6};
+    G4double fPhCREFLECTIVITY[4] = {0.0, 0.0, 0.0, 0.0};
+    
+    G4MaterialPropertiesTable* PhotocathodeMPT = new G4MaterialPropertiesTable();
+    PhotocathodeMPT->AddProperty("RINDEX", fPhCEnergy, fPhCRINDEX, 4);
+    PhotocathodeMPT->AddProperty("KINDEX", fPhCEnergy, fPhCKINDEX, 4);
+    PhotocathodeMPT->AddProperty("REFLECTIVITY", fPhCEnergy, fPhCREFLECTIVITY, 4);
+    PhotocathodeMPT->AddProperty("EFFICIENCY", fPP_PhCQE_Dynode20inch, fPhCEFFICIENCY_Dynode20inch, 43);
+    Photocathode_mat -> SetMaterialPropertiesTable(PhotocathodeMPT);
+
 
 }
 
@@ -253,17 +272,17 @@ G4LogicalVolume* LSDetectorConstruction::CDConstruction()
 G4LogicalVolume* LSDetectorConstruction::SensDetConstruction()
 {
     G4Sphere* solidDet = 
-        new G4Sphere("detSolid", 18000*mm, 18010*mm, 0, 2*pi, 0, pi);
+        new G4Sphere("detSolid", 18000*mm, 18010*mm, 0*deg, 360*deg, 0, 180*deg);
         //new G4Sphere("detSolid", 10*cm, 11*cm, 0, 2*pi, 0, pi);
 
-    G4Box* solidHole = 
-        new G4Box("holeSolid", 1*mm, 1*mm, 2*cm);
+    //G4Box* solidHole = 
+    //    new G4Box("holeSolid", 1*mm, 1*mm, 2*cm);
 
-    G4VSolid* solidSub = 
-        new G4SubtractionSolid("subSolid", solidDet, solidHole, 0, G4ThreeVector(0, 0, 18005*mm));
+    //G4VSolid* solidSub = 
+    //    new G4SubtractionSolid("subSolid", solidDet, solidHole, 0, G4ThreeVector(0, 0, 18005*mm));
 
     G4LogicalVolume* logicDet = 
-        new G4LogicalVolume(solidSub, 
+        new G4LogicalVolume(solidDet, 
                             Steel,
                             "logicDet");
 

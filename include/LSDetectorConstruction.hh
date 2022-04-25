@@ -45,6 +45,7 @@ class LSDetectorConstruction : public G4VUserDetectorConstruction
         G4Material* water;
         G4Material* LS;
         G4Material* Steel;
+        G4Material* Photocathode_mat;
         
         G4OpticalSurface* m_mirror_opsurf;
         G4OpticalSurface* Photocathode_opsurf;

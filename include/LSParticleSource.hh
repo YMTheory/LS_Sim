@@ -20,7 +20,7 @@ class LSParticleSource : public G4VPrimaryGenerator
         void SetKineticEnergy(G4double energy);
         void SetMomentumType(G4String type);
         void GenerateIsotropicFlux();
-        void SetParticleMomentum(G4ThreeVector mom);
+        void SetMomentum(G4ThreeVector mom);
         void SetPosition(G4ThreeVector pos);
         
     private:

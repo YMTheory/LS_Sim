@@ -67,7 +67,7 @@ void LSParticleSource::GenerateIsotropicFlux()
 
 }
 
-void LSParticleSource::SetParticleMomentum(G4ThreeVector mom)
+void LSParticleSource::SetMomentum(G4ThreeVector mom)
 {
     m_Mom = mom;
 }

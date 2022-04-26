@@ -10,15 +10,22 @@
 #include "G4PhysicalConstants.hh"
 
 LSParticleSource::LSParticleSource() {
+
+    me = 0.511*MeV;
+
     m_particle          = NULL;
     m_energy            = 1.0*MeV;
-    m_MomType           = "iso";
+    m_MomType           = "iso";    // candidates: iso, direction, range
     m_Mom               = G4ThreeVector(1., 0., 0.);
     m_pos               = G4ThreeVector(0, 0, 0);
+
+    theMessenger        = new LSParticleSourceMessenger(this);
 }
 
 LSParticleSource::~LSParticleSource()
-{}
+{
+    delete theMessenger;
+}
 
 void LSParticleSource::SetParticleDefinition(G4ParticleDefinition* aParticleDefinition) 
 {
@@ -39,6 +46,9 @@ void LSParticleSource::SetMomentumType(G4String type)
 
 void LSParticleSource::GenerateIsotropicFlux()
 {
+
+    G4double p =sqrt(m_energy*m_energy + 2*me*m_energy);
+
     G4double rndm, rndm2;
     G4double px, py, pz;
 
@@ -52,9 +62,9 @@ void LSParticleSource::GenerateIsotropicFlux()
     sinphi = std::sin(Phi);
     cosphi = std::cos(Phi);
 
-    px = -sintheta * cosphi;
-    py = -sintheta * sinphi;
-    pz = -costheta;
+    px = -sintheta * cosphi * p;
+    py = -sintheta * sinphi * p;
+    pz = -costheta * p;
 
     G4double ResMag = std::sqrt((px*px) + (py*py) + (pz*pz));
     px = px/ResMag;

@@ -3,6 +3,9 @@
 #define LSAnalysisManager_h 1
 
 #include "globals.hh"
+#include "LSAnalysisMessenger.hh"
+
+class LSAnalysisMessenger;
 
 class LSAnalysisManager  {
     
@@ -33,6 +36,8 @@ class LSAnalysisManager  {
         G4String outputFileName;
 
         static LSAnalysisManager* instance;
+
+        LSAnalysisMessenger* analysisMessenger;
         
 };
 

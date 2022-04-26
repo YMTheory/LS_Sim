@@ -4,6 +4,7 @@
 #include "G4ParticleDefinition.hh"
 #include "G4VPrimaryGenerator.hh"
 #include "G4ThreeVector.hh"
+#include "LSParticleSourceMessenger.hh"
 
 class LSParticleSource : public G4VPrimaryGenerator 
 {
@@ -24,11 +25,18 @@ class LSParticleSource : public G4VPrimaryGenerator
         void SetPosition(G4ThreeVector pos);
         
     private:
+        G4double                me;
+
         G4String                m_MomType;
         G4ThreeVector           m_Mom;
         G4double                m_energy;
         G4ThreeVector           m_pos;
         G4ParticleDefinition*   m_particle;
+
+    
+    private:
+        LSParticleSourceMessenger* theMessenger;
+
 };
 
 

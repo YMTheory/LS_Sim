@@ -10,6 +10,8 @@ LSAnalysisManager::LSAnalysisManager()
 {
     G4AnalysisManager::Instance();
 
+    analysisMessenger = new LSAnalysisMessenger(this);
+
 }
 
 LSAnalysisManager::~LSAnalysisManager()

@@ -16,7 +16,7 @@
 LSParticleSourceMessenger::LSParticleSourceMessenger(LSParticleSource* fPtclGun)
     : fParticleGun(fPtclGun)
 {
-    gunDirectory = new G4UIdirectory("/LS/gun");
+    gunDirectory = new G4UIdirectory("/LS/gun/");
     gunDirectory -> SetGuidance("Particle Source Control Commands");
 
     // particle type :

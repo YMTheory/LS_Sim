@@ -55,12 +55,6 @@ LSAnalysisManager* LSAnalysisManager::getInstance()
 }
 
 
-void LSAnalysisManager::SetOutputFileName(G4String newName)
-{
-  
-  outputFileName = newName;
-}
-
 void LSAnalysisManager::analyseEventID( G4int evtid )
 {
     G4AnalysisManager* man = G4AnalysisManager::Instance();

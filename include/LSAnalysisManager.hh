@@ -18,13 +18,13 @@ class LSAnalysisManager  {
         //method to call to create an instance of this class
         static LSAnalysisManager* getInstance();
         
-        void SetOutputFileName(G4String);
-
         void analyseEventID(G4int evtid);
         void analyseTotNPE(G4int number);
         void analyseCerNPE(G4int number);
         void analyseSctNPE(G4int number);
         void analyseAddNtupleRow();
+
+        void SetOutputName(G4String name) { outputFileName = name; }
 
 
     private:

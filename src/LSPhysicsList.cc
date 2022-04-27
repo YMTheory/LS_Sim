@@ -15,7 +15,6 @@
 
 LSPhysicsList::LSPhysicsList() : G4VModularPhysicsList()
 {
-    defaultCutValue = 1.0*mm;
 
     emPhysicsList = new G4EmLivermorePhysics();
     decayPhysicsList = new G4DecayPhysics();
@@ -29,8 +28,9 @@ LSPhysicsList::~LSPhysicsList() {
 
 void LSPhysicsList::SetCuts() {
     //SetCutsWithDefault();
-
+    defaultCutValue = 1.0*mm;
     const G4double cutForGamma = defaultCutValue;
+    defaultCutValue = 0.1*mm;
     const G4double cutForElectron = defaultCutValue;
     const G4double cutForPositron = defaultCutValue;
 

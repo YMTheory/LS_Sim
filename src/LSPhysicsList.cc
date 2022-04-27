@@ -16,14 +16,20 @@
 LSPhysicsList::LSPhysicsList() : G4VModularPhysicsList()
 {
 
+    m_enableoptical = true;
+
     emPhysicsList = new G4EmLivermorePhysics();
     decayPhysicsList = new G4DecayPhysics();
+
+    theMessenger = new LSPhysicsListMessenger(this);
 
 }
 
 LSPhysicsList::~LSPhysicsList() {
     delete emPhysicsList;
     delete decayPhysicsList;
+
+    delete theMessenger;
 }
 
 void LSPhysicsList::SetCuts() {
@@ -122,14 +128,16 @@ void LSPhysicsList::ConstructOpticalProcess()
             G4cout << " ===> Registered Boundary Process " << G4endl;
         }
 
-        if(theCerProcess->IsApplicable(*particle)) {
-            pmanager -> AddProcess(theCerProcess);
-            pmanager -> SetProcessOrdering(theCerProcess, idxPostStep);
-        }
-        if(scint -> IsApplicable(*particle)) {
-            pmanager -> AddProcess(scint);
-            pmanager -> SetProcessOrderingToLast( scint, idxAtRest);
-            pmanager -> SetProcessOrderingToLast( scint, idxPostStep);
+        if (m_enableoptical) {
+            if(theCerProcess->IsApplicable(*particle)) {
+                pmanager -> AddProcess(theCerProcess);
+                pmanager -> SetProcessOrdering(theCerProcess, idxPostStep);
+            }
+            if(scint -> IsApplicable(*particle)) {
+                pmanager -> AddProcess(scint);
+                pmanager -> SetProcessOrderingToLast( scint, idxAtRest);
+                pmanager -> SetProcessOrderingToLast( scint, idxPostStep);
+            }
         }
     }
 }

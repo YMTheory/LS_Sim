@@ -3,6 +3,7 @@
 
 #include "G4VModularPhysicsList.hh"
 #include "globals.hh"
+#include "LSPhysicsListMessenger.hh"
 
 class G4VPhysicsConstructor;
 class G4ProductionCuts;
@@ -20,11 +21,17 @@ class LSPhysicsList : public G4VModularPhysicsList
         virtual void ConstructProcess();
         void ConstructOpticalProcess();
 
-
+        void DoOpticalSim(G4bool enableoptical)     { m_enableoptical = enableoptical; }
 
     private:
         G4VPhysicsConstructor* emPhysicsList;
         G4VPhysicsConstructor* decayPhysicsList;
+
+
+    private:
+        G4bool m_enableoptical;
+
+        LSPhysicsListMessenger* theMessenger;
 };
 
 #endif

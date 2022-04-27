@@ -18,13 +18,13 @@ LSTrackingAction::~LSTrackingAction()
 void LSTrackingAction::PreUserTrackingAction( const G4Track* aTrack )
 {
 
-    //if (track->GetParentID() == 1) // primary e+-
+    //if (aTrack->GetParentID() == 1) // primary e+-
     //{
-    //    if (track->GetParticleDefinition()->GetParticleName() == "e+") {
-    //        G4cout << track->GetKineticEnergy() << "a ";
+    //    if (aTrack->GetParticleDefinition()->GetParticleName() == "e+") {
+    //        G4cout << aTrack->GetKineticEnergy() << "a ";
     //    }
-    //    if (track->GetParticleDefinition()->GetParticleName() == "e-") {
-    //        G4cout << track->GetKineticEnergy() << "b ";
+    //    if (aTrack->GetParticleDefinition()->GetParticleName() == "e-") {
+    //        G4cout << aTrack->GetKineticEnergy() << "b ";
     //    }
     //}
 

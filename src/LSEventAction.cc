@@ -19,6 +19,7 @@ LSEventAction::~LSEventAction()
 void LSEventAction::BeginOfEventAction(const G4Event* evt)
 {
     G4cout << "Begin of Event " << evt->GetEventID() << G4endl;
+    //G4cout << G4endl;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

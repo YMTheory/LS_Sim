@@ -16,7 +16,7 @@ LSDetectorSD::LSDetectorSD( const G4String& name,
                   const G4String& hitsCollectionName)
     : G4VSensitiveDetector(name),
     fHitsCollection(NULL),
-    efficiency(0.27)
+    efficiency(0.36)
 {
     collectionName.insert(hitsCollectionName);
 

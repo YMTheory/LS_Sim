@@ -85,7 +85,7 @@ void LSParticleSourceMessenger::SetNewValue
     else if (cmd == momCmd)
         fParticleGun->SetMomentum(momCmd->GetNew3VectorValue(newValues));
 
-    else if (cmd == energyCmd)
+    else if (cmd == energyCmd) 
         fParticleGun->SetKineticEnergy(energyCmd->GetNewDoubleValue(newValues));
 
     else if (cmd == posCmd)

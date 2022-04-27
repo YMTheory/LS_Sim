@@ -94,13 +94,14 @@ void LSParticleSource::GeneratePrimaryVertex(G4Event* event)
         return;
     }
 
+    G4PrimaryVertex* vertex = new G4PrimaryVertex(m_pos, 0);
+    G4PrimaryParticle* particle = new G4PrimaryParticle(m_particle, m_Mom.x(), m_Mom.y(), m_Mom.z());
+    particle->SetKineticEnergy(m_energy);
+
     if(m_MomType == "iso") {
         GenerateIsotropicFlux();
     }
 
-    G4PrimaryVertex* vertex = new G4PrimaryVertex(m_pos, 0);
-    G4PrimaryParticle* particle = new G4PrimaryParticle(m_particle, m_Mom.x(), m_Mom.y(), m_Mom.z());
-    particle->SetKineticEnergy(m_energy);
     vertex->SetPrimary(particle);
     event->AddPrimaryVertex(vertex);
 }

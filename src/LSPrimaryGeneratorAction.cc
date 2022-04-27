@@ -31,13 +31,13 @@ LSPrimaryGeneratorAction::~LSPrimaryGeneratorAction()
 void LSPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 {
     
-    fParticleGun = new LSParticleSource();
-    G4ParticleTable* particleTable = G4ParticleTable::GetParticleTable();
-    G4String particleName;
-    G4ParticleDefinition* particle = particleTable->FindParticle(particleName="e-");
-    fParticleGun->SetParticleDefinition(particle);
-    fParticleGun->SetKineticEnergy(1.0*MeV);
-    fParticleGun->SetPosition(G4ThreeVector(0, 0, 0));
+    //fParticleGun = new LSParticleSource();
+    //G4ParticleTable* particleTable = G4ParticleTable::GetParticleTable();
+    //G4String particleName;
+    //G4ParticleDefinition* particle = particleTable->FindParticle(particleName="e-");
+    //fParticleGun->SetParticleDefinition(particle);
+    //fParticleGun->SetKineticEnergy(1.0*MeV);
+    //fParticleGun->SetPosition(G4ThreeVector(0, 0, 0));
     fParticleGun->GeneratePrimaryVertex( anEvent );
 
 

@@ -13,6 +13,7 @@ class G4UIcmdWithoutParameter;
 class G4UIcmdWithAString;
 class G4UIcmdWithADoubleAndUnit;
 class G4UIcmdWith3VectorAndUnit;
+class G4UIcmdWithAnInteger;
 
 
 class LSParticleSourceMessenger : public G4UImessenger {
@@ -30,11 +31,21 @@ class LSParticleSourceMessenger : public G4UImessenger {
     private:
         G4UIdirectory               *gunDirectory;
 
-        G4UIcmdWithAString          *particleCmd;
-        G4UIcmdWithAString          *momTypeCmd;
-        G4UIcmdWithADoubleAndUnit   *energyCmd;
-        G4UIcmdWith3VectorAndUnit   *momCmd;
-        G4UIcmdWith3VectorAndUnit   *posCmd;
+        G4UIcmdWithAnInteger        *numCmd;
+
+        G4UIcmdWithAString          *particle1Cmd;
+        G4UIcmdWithAString          *momType1Cmd;
+        G4UIcmdWithADoubleAndUnit   *energy1Cmd;
+        G4UIcmdWith3VectorAndUnit   *mom1Cmd;
+        G4UIcmdWith3VectorAndUnit   *pos1Cmd;
+
+
+        G4UIcmdWithAString          *particle2Cmd;
+        G4UIcmdWithAString          *momType2Cmd;
+        G4UIcmdWithADoubleAndUnit   *energy2Cmd;
+        G4UIcmdWith3VectorAndUnit   *mom2Cmd;
+        G4UIcmdWith3VectorAndUnit   *pos2Cmd;
+
 };
 
 #endif

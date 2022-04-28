@@ -39,7 +39,6 @@ void LSPhysicsListMessenger::SetNewValue
     
     if (cmd == opticalCmd) 
         LSPhyList -> DoOpticalSim(opticalCmd->GetNewBoolValue(newValues));
-
     else if (cmd == yieldCmd) 
         LSPhyList -> SetYieldRatio(yieldCmd->GetNewDoubleValue(newValues));
 

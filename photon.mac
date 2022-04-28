@@ -1,0 +1,20 @@
+/LS/phys/enableoptical false
+/LS/phys/yield 2.0
+
+/run/initialize
+
+# verbose config
+/control/verbose 0
+/run/verbose 0
+/tracking/verbose 0
+
+/LS/ana/output Det1_e1MeV
+
+/LS/gun/particle e-
+/LS/gun/energy 1.0
+/LS/gun/momtype iso
+/LS/gun/position 0 0 0
+
+/LS/sd/efficiency 0.18
+
+/run/beamOn 50

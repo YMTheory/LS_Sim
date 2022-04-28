@@ -17,6 +17,7 @@ LSPhysicsList::LSPhysicsList() : G4VModularPhysicsList()
 {
 
     m_enableoptical = true;
+    m_yield = 1.0;
 
     emPhysicsList = new G4EmLivermorePhysics();
     decayPhysicsList = new G4DecayPhysics();

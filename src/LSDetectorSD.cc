@@ -21,7 +21,6 @@ LSDetectorSD::LSDetectorSD( const G4String& name,
     collectionName.insert(hitsCollectionName);
 
     analysis = LSAnalysisManager::getInstance();
-    G4cout << "Current SD PDE is set as " << efficiency << G4endl;
 
     theMessenger = new LSDetectorSDMessenger(this); 
 

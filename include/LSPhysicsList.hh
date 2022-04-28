@@ -22,6 +22,7 @@ class LSPhysicsList : public G4VModularPhysicsList
         void ConstructOpticalProcess();
 
         void DoOpticalSim(G4bool enableoptical)     { m_enableoptical = enableoptical; }
+        void SetYieldRatio(G4double yield)          { m_yield = yield; }
 
     private:
         G4VPhysicsConstructor* emPhysicsList;
@@ -30,6 +31,7 @@ class LSPhysicsList : public G4VModularPhysicsList
 
     private:
         G4bool m_enableoptical;
+        G4double m_yield;
 
         LSPhysicsListMessenger* theMessenger;
 };

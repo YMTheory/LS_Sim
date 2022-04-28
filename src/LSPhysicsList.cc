@@ -95,7 +95,7 @@ void LSPhysicsList::ConstructOpticalProcess()
     scint->SetDoReemission(true);
     scint->SetDoReemissionOnly(false);
     scint->SetDoBothProcess(true);
-    scint->SetScintillationYieldFactor(1.0); //1.);
+    scint->SetScintillationYieldFactor(m_yield); //1.);
     scint->SetTrackSecondariesFirst(true);
     scint->SetFlagDecayTimeFast(true);
     scint->SetFlagDecayTimeSlow(true);

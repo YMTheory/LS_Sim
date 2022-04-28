@@ -2,6 +2,7 @@
 #include "LSPhysicsList.hh"
 #include "G4UIdirectory.hh"
 #include "G4UIcmdWithABool.hh"
+#include "G4UIcmdWithADouble.hh"
 
 LSPhysicsListMessenger::LSPhysicsListMessenger(LSPhysicsList* phyList)
     : LSPhyList(phyList)
@@ -16,6 +17,10 @@ LSPhysicsListMessenger::LSPhysicsListMessenger(LSPhysicsList* phyList)
     opticalCmd -> SetParameterName("enableoptical", true);
     opticalCmd -> SetDefaultValue(true);
 
+    yieldCmd = new G4UIcmdWithADouble("/LS/phys/yield", this);
+    yieldCmd -> SetGuidance("Set scintillation yield ratio.");
+    yieldCmd -> SetParameterName("yieldratio", true);
+    yieldCmd -> SetDefaultValue(1.0);
 
 }
 
@@ -24,6 +29,7 @@ LSPhysicsListMessenger::LSPhysicsListMessenger(LSPhysicsList* phyList)
 LSPhysicsListMessenger::~LSPhysicsListMessenger()
 {
     delete opticalCmd;
+    delete yieldCmd;
     delete phyDirectory;
 }
 
@@ -33,6 +39,9 @@ void LSPhysicsListMessenger::SetNewValue
     
     if (cmd == opticalCmd) 
         LSPhyList -> DoOpticalSim(opticalCmd->GetNewBoolValue(newValues));
+
+    else if (cmd == yieldCmd) 
+        LSPhyList -> SetYieldRatio(yieldCmd->GetNewDoubleValue(newValues));
 
     else
         G4cout << "Error: Unknow Command !!! " << G4endl;

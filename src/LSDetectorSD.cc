@@ -16,17 +16,21 @@ LSDetectorSD::LSDetectorSD( const G4String& name,
                   const G4String& hitsCollectionName)
     : G4VSensitiveDetector(name),
     fHitsCollection(NULL),
-    efficiency(0.36)
+    efficiency(0.54)
 {
     collectionName.insert(hitsCollectionName);
 
     analysis = LSAnalysisManager::getInstance();
     G4cout << "Current SD PDE is set as " << efficiency << G4endl;
 
+    theMessenger = new LSDetectorSDMessenger(this); 
+
 }
 
 LSDetectorSD::~LSDetectorSD()
-{;}
+{
+    delete theMessenger;
+}
 
 
 void LSDetectorSD::Initialize(G4HCofThisEvent* hce)

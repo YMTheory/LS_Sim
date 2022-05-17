@@ -43,6 +43,13 @@ class NormalTrackInfo: public G4VUserTrackInformation {
         inline void setParentName(const G4String& parent_name) { m_parent_name = parent_name; }
         inline const G4String& getParentName() const { return m_parent_name; }
 
+        inline void addEdep(G4double edep) { m_edep += edep; }
+        inline const G4double getEdep()    { return m_edep; }
+
+        inline void addQedep(G4double qedep) { m_Qedep += qedep; }
+        inline const G4double getQedep()     { return m_Qedep; }
+
+
     private:
         G4int originalTrackID;
 
@@ -55,6 +62,10 @@ class NormalTrackInfo: public G4VUserTrackInformation {
 
         // info of Parent Track
         G4String m_parent_name;
+
+        // energy deposit
+        G4double m_edep;
+        G4double m_Qedep;
 };
 
 extern G4ThreadLocal G4Allocator<NormalTrackInfo>* aNormalTrackInformationAllocator;

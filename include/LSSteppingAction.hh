@@ -3,8 +3,10 @@
 
 #include "G4UserSteppingAction.hh"
 #include "globals.hh"
+#include "LSTrackingAction.hh"
 
 class LSEventAction;
+class LSTrackingAction;
 
 class LSSteppingAction : public G4UserSteppingAction
 {

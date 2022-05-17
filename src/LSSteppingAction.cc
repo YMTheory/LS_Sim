@@ -10,7 +10,8 @@
 
 LSSteppingAction::LSSteppingAction(LSEventAction* event)
 : G4UserSteppingAction()
-{;}
+{
+}
 
 LSSteppingAction::~LSSteppingAction()
 {;}

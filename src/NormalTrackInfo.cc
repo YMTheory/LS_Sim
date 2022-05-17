@@ -11,6 +11,9 @@ NormalTrackInfo::NormalTrackInfo()
     from_cerenkov =false;
     is_reemission =false;
     m_op_is_original_op = false;
+
+    m_edep = 0;
+    m_Qedep = 0;
 }
 
 NormalTrackInfo::NormalTrackInfo(const G4Track* aTrack)
@@ -19,6 +22,9 @@ NormalTrackInfo::NormalTrackInfo(const G4Track* aTrack)
     is_reemission =false;
 
     m_op_is_original_op = false;
+
+    m_edep = 0;
+    m_Qedep = 0;
 }
 
 NormalTrackInfo::NormalTrackInfo(const NormalTrackInfo* aTrackInfo)
@@ -27,6 +33,9 @@ NormalTrackInfo::NormalTrackInfo(const NormalTrackInfo* aTrackInfo)
     is_reemission = aTrackInfo->is_reemission;
 
     m_op_is_original_op = false;
+
+    m_edep = 0;
+    m_Qedep = 0;
 }
 
 NormalTrackInfo::~NormalTrackInfo(){;}

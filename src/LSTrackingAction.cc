@@ -1,4 +1,4 @@
-
+#include "MyAnalysisManager.hh"
 #include "LSTrackingAction.hh"
 #include "NormalTrackInfo.hh"
 
@@ -33,6 +33,8 @@ void LSTrackingAction::PreUserTrackingAction( const G4Track* aTrack )
         G4Track* theTrack = (G4Track*)aTrack;
         theTrack->SetUserInformation(anInfo);
     }
+
+    MyAnalysisManager::GetInstance()->PreTrackingAction(aTrack);
 
 }
 
@@ -97,5 +99,6 @@ void LSTrackingAction::PostUserTrackingAction ( const G4Track* aTrack )
     //           << G4endl;
     //}
 
+    MyAnalysisManager::GetInstance()->PostTrackingAction(aTrack);
 
 }

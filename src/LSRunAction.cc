@@ -1,5 +1,6 @@
 #include "LSRunAction.hh"
 #include "LSAnalysisManager.hh"
+#include "MyAnalysisManager.hh"
 #include "Randomize.hh"
 #include <ctime>
 
@@ -16,6 +17,8 @@ void LSRunAction::BeginOfRunAction(const G4Run*)
     G4cout << "Begin of One Run" << G4endl;
     LSAnalysisManager* analysis = LSAnalysisManager::getInstance();
     analysis->book();
+
+    MyAnalysisManager::GetInstance()->BeginOfRunAction();
 
     if (fAutoSeed) {
      // automatic (time-based) random seeds for each run
@@ -47,6 +50,8 @@ void LSRunAction::EndOfRunAction(const G4Run* )
 {
     LSAnalysisManager* analysis = LSAnalysisManager::getInstance();
     analysis->finish();
+
+    MyAnalysisManager::GetInstance()->EndOfRunAction();
 
     if (fSaveRndm == 1) {
      G4Random::showEngineStatus();

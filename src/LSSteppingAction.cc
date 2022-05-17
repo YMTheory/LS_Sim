@@ -1,5 +1,6 @@
 #include "LSSteppingAction.hh"
 #include "LSEventAction.hh"
+#include "MyAnalysisManager.hh"
 
 #include "G4Track.hh"
 #include "G4ThreeVector.hh"
@@ -32,4 +33,6 @@ void LSSteppingAction::UserSteppingAction(const G4Step* step)
             << ", edep = " << step->GetTotalEnergyDeposit() << ", stepLength = " << step->GetStepLength()
             << G4endl;
     }
+
+    MyAnalysisManager::GetInstance()->SteppingAction(step);
 }

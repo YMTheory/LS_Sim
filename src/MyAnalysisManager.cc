@@ -6,6 +6,7 @@ MyAnalysisManager* MyAnalysisManager::fInstance = 0;
 MyAnalysisManager::MyAnalysisManager()
 {
     fMyRootBasedAnalysis = new MyRootBasedAnalysis();
+    fMyRootBasedAnalysis->Activated();
 
 }
 

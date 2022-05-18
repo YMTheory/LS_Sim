@@ -1,5 +1,8 @@
 #include "MyRootBasedAnalysis.hh"
 
+#include "G4Material.hh"
+#include "G4OpticalPhoton.hh"
+
 #include "TFile.h"
 #include "TTree.h"
 
@@ -60,6 +63,9 @@ void MyRootBasedAnalysis::BeginOfEventAction(const G4Event* )
     if (!active)
         return;
 
+    // Initialization :
+    edep = 0.;
+    qedep = 0.;
 
     //------- add your codes down here
     //
@@ -87,10 +93,6 @@ void MyRootBasedAnalysis::PreTrackingAction(const G4Track* aTrack)
         return;
 
     //------- add your codes down here
-    if (aTrack->GetParentID() == 0) {
-        edep = 0;
-    }
-
     return;
 }
 
@@ -113,9 +115,10 @@ void MyRootBasedAnalysis::SteppingAction(const G4Step* aStep)
 
     //------- add your codes down here
     G4Track* aTrack = aStep->GetTrack();
+    G4double m_edep = aStep->GetTotalEnergyDeposit();
 
-    if (aTrack->GetParentID() == 0) {
-        edep += aStep->GetTotalEnergyDeposit();
+    if (m_edep > 0 and aTrack->GetDefinition()!=G4OpticalPhoton::Definition()){
+        edep += m_edep; 
     }
 
     return;

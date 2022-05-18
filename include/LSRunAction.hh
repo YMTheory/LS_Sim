@@ -5,6 +5,7 @@
 #include "globals.hh"
 
 class G4Run;
+class MyAnalysisMessenger;
 
 class LSRunAction : public G4UserRunAction
 {
@@ -24,6 +25,7 @@ class LSRunAction : public G4UserRunAction
         G4int  fSaveRndm;
         G4bool fAutoSeed;
 
+        MyAnalysisMessenger* fRunMessenger;
 };
 
 #endif

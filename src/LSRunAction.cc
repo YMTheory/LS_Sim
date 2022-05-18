@@ -1,12 +1,15 @@
 #include "LSRunAction.hh"
 #include "LSAnalysisManager.hh"
 #include "MyAnalysisManager.hh"
+#include "MyAnalysisMessenger.hh"
 #include "Randomize.hh"
 #include <ctime>
 
 LSRunAction::LSRunAction()
 : G4UserRunAction(), fSaveRndm(0), fAutoSeed(true)
-{;}
+{
+    fRunMessenger = new MyAnalysisMessenger();
+}
 
 
 LSRunAction::~LSRunAction()
@@ -17,6 +20,7 @@ void LSRunAction::BeginOfRunAction(const G4Run*)
     G4cout << "Begin of One Run" << G4endl;
     LSAnalysisManager* analysis = LSAnalysisManager::getInstance();
     analysis->book();
+
 
     MyAnalysisManager::GetInstance()->BeginOfRunAction();
 

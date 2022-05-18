@@ -26,6 +26,7 @@ class MyRootBasedAnalysis
         void PostTrackingAction(const G4Track *aTrack);
 
         inline void SetFileName(G4String fname) { fFileName = fname; }
+        inline void SetBirks1(G4double val)     { m_BirksConstant1 = val;}
         inline void Activated() { active = true; }
         inline void Deactivated() { active = false; }
         inline bool IsActivated() { return active; }

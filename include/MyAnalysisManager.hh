@@ -32,14 +32,17 @@ public:
     void PreTrackingAction(const G4Track *aTrack);
     void PostTrackingAction(const G4Track *aTrack);
 
+
+    void SetFileName(G4String val);
+    void SetBirks1(G4double val);
+    void SetActivate(G4bool val);
+
+
     private:
         static MyAnalysisManager* fInstance;
         MyRootBasedAnalysis* fMyRootBasedAnalysis;
 
 
 };
-
-
-
 
 #endif

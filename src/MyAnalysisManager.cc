@@ -7,7 +7,7 @@ MyAnalysisManager::MyAnalysisManager()
 {
     fMyRootBasedAnalysis = new MyRootBasedAnalysis();
     fMyRootBasedAnalysis->Activated();
-
+    
 }
 
 MyAnalysisManager::~MyAnalysisManager()
@@ -54,12 +54,24 @@ void MyAnalysisManager::SteppingAction(const G4Step* aStep)
 
 
 
+void MyAnalysisManager::SetFileName(G4String val)
+{   
+    fMyRootBasedAnalysis->SetFileName(val);
+}
 
 
+void MyAnalysisManager::SetBirks1(G4double val)
+{
+    fMyRootBasedAnalysis->SetBirks1(val);
+}
 
 
+void MyAnalysisManager::SetActivate(G4bool val) {
+    if (val)
+        fMyRootBasedAnalysis->Activated();
+    else
+        fMyRootBasedAnalysis->Deactivated();
 
-
-
+}
 
 

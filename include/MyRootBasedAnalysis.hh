@@ -31,6 +31,7 @@ class MyRootBasedAnalysis
         inline bool IsActivated() { return active; }
 
 
+        double calculateQuenched(const G4Step* aStep);
 
     private:
         G4String fFileName;
@@ -39,6 +40,9 @@ class MyRootBasedAnalysis
 
         TFile* fRootFp;
         TTree* fTree;
+
+        double m_BirksConstant1;
+        double m_BirksConstant2;
 
         Int_t           pdf_id;
         Float_t         pre_x;

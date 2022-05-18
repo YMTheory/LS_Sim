@@ -1,7 +1,12 @@
 #include "MyRootBasedAnalysis.hh"
 
 #include "G4Material.hh"
+#include "G4ParticleDefinition.hh"
 #include "G4OpticalPhoton.hh"
+#include "G4Electron.hh"
+#include "G4Gamma.hh"
+#include "G4LossTableManager.hh"
+#include "G4SystemOfUnits.hh"
 
 #include "TFile.h"
 #include "TTree.h"
@@ -10,6 +15,9 @@
 MyRootBasedAnalysis::MyRootBasedAnalysis()
 {
     SetFileName("output.root");
+
+    m_BirksConstant1 = 6.5e-3*g/cm2/MeV;
+    m_BirksConstant2 = 1.5e-6*(g/cm2/MeV)*(g/cm2/MeV);
 }
 
 MyRootBasedAnalysis::~MyRootBasedAnalysis()
@@ -119,12 +127,51 @@ void MyRootBasedAnalysis::SteppingAction(const G4Step* aStep)
 
     if (m_edep > 0 and aTrack->GetDefinition()!=G4OpticalPhoton::Definition()){
         edep += m_edep; 
+
+        double m_qedep = calculateQuenched(aStep);
+        qedep += m_qedep;
     }
 
     return;
 }
 
 
+double MyRootBasedAnalysis::calculateQuenched(const G4Step* aStep) 
+{
+
+    double QuenchedTotalEnergyDeposit = 0.;
+    double dE = aStep->GetTotalEnergyDeposit();
+    double dx = aStep->GetStepLength();
+
+    G4Track* aTrack = aStep->GetTrack();
+    G4ParticleDefinition* aParticle = aTrack->GetDefinition();
+    
+    if (dE > 0) {
+        if (aParticle == G4Gamma::Gamma()) {
+            G4LossTableManager* manager = G4LossTableManager::Instance();
+            dx = manager->GetRange(G4Electron::Electron(), dE, aTrack->GetMaterialCutsCouple());
+        }
+        G4Material* aMaterial = aStep->GetPreStepPoint()->GetMaterial();
+        G4MaterialPropertiesTable* aMaterialPropertiesTable = aMaterial->GetMaterialPropertiesTable();
+        if(aMaterialPropertiesTable) {
+            const G4MaterialPropertyVector* Fast_Intensity = aMaterialPropertiesTable->GetProperty("FASTCOMPONENT");
+            const G4MaterialPropertyVector* Slow_Intensity = aMaterialPropertiesTable->GetProperty("SLOWCOMPONENT");
+
+            if (Fast_Intensity || Slow_Intensity) {
+                double delta = dE/dx/aMaterial->GetDensity();
+                double birk1 = m_BirksConstant1;
+                if(aTrack->GetDefinition()->GetPDGCharge()>1.1)//for particle charge greater than 1.
+                    birk1 = 0.57*birk1;
+                //double birk2 = (0.0031*g/MeV/cm2)*(0.0031*g/MeV/cm2);
+                double birk2 = m_BirksConstant2;
+                QuenchedTotalEnergyDeposit = dE /(1+birk1*delta+birk2*delta*delta);
+
+            }
+        }
+    }
+
+    return QuenchedTotalEnergyDeposit;
+}
 
 
 

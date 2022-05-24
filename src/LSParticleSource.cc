@@ -1,4 +1,5 @@
 #include "LSParticleSource.hh"
+#include "ContinuousSpectrumManager.hh"
 
 #include "G4Event.hh"
 #include "Randomize.hh"
@@ -165,6 +166,17 @@ void LSParticleSource::GenerateIsotropicFlux2()
 
 void LSParticleSource::GeneratePrimaryVertex(G4Event* event)
 {
+    G4double m_load_edep = 0;
+    if (m_parNum == 1 and ContinuousSpectrumManager::GetInstance()->GetActivate()) {
+        // load continuous spectrum file
+        if (event->GetEventID() < ContinuousSpectrumManager::GetInstance()->GetMaxEvt()) {
+            m_load_edep = ContinuousSpectrumManager::GetInstance()->GetEdep(event->GetEventID());
+        } else {
+            m_load_edep = ContinuousSpectrumManager::GetInstance()->GetEdep(0);
+        }
+    }
+
+
     if(m_parNum == 1 and m_particle1 == NULL) {
         G4cout << "No particle has been defined !" << G4endl;
         return;
@@ -178,6 +190,9 @@ void LSParticleSource::GeneratePrimaryVertex(G4Event* event)
         G4PrimaryVertex* vertex = new G4PrimaryVertex(m_pos1, 0);
         G4PrimaryParticle* particle = new G4PrimaryParticle(m_particle1, m_Mom1.x(), m_Mom1.y(), m_Mom1.z());
         particle->SetKineticEnergy(m_energy1);
+        if (ContinuousSpectrumManager::GetInstance()->GetActivate()) {
+            particle -> SetKineticEnergy(m_load_edep);
+        }
 
         if(m_MomType1 == "iso") {
             GenerateIsotropicFlux1();

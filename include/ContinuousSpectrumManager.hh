@@ -32,6 +32,8 @@ class ContinuousSpectrumManager
         void SetTreename(G4String val)    { treename = val;}
         void SetActivate(G4bool val)      { is_activated = val; } 
         G4bool GetActivate()              { return is_activated; }
+        void SetMaxEvt(G4int val)         { nMaxEvt = val; }
+        G4int GetMaxEvt()                 { return nMaxEvt; }
 
         void LoadContinuousSpectrum();
 

@@ -2,6 +2,8 @@
 #include "LSAnalysisManager.hh"
 #include "MyAnalysisManager.hh"
 #include "MyAnalysisMessenger.hh"
+#include "ContinuousSpectrumManager.hh"
+#include "ContinuousSpectrumMessenger.hh"
 #include "Randomize.hh"
 #include <ctime>
 
@@ -9,6 +11,7 @@ LSRunAction::LSRunAction()
 : G4UserRunAction(), fSaveRndm(0), fAutoSeed(true)
 {
     fRunMessenger = new MyAnalysisMessenger();
+    fConSpecMessenger = new ContinuousSpectrumMessenger();
 }
 
 
@@ -21,6 +24,9 @@ void LSRunAction::BeginOfRunAction(const G4Run*)
     LSAnalysisManager* analysis = LSAnalysisManager::getInstance();
     analysis->book();
 
+    if (ContinuousSpectrumManager::GetInstance()->GetActivate()) {
+        ContinuousSpectrumManager::GetInstance()->LoadContinuousSpectrum();
+    }
 
     MyAnalysisManager::GetInstance()->BeginOfRunAction();
 

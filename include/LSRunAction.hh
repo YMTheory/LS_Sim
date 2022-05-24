@@ -6,6 +6,7 @@
 
 class G4Run;
 class MyAnalysisMessenger;
+class ContinuousSpectrumMessenger;
 
 class LSRunAction : public G4UserRunAction
 {
@@ -26,6 +27,7 @@ class LSRunAction : public G4UserRunAction
         G4bool fAutoSeed;
 
         MyAnalysisMessenger* fRunMessenger;
+        ContinuousSpectrumMessenger* fConSpecMessenger;
 };
 
 #endif

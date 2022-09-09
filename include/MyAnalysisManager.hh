@@ -37,6 +37,14 @@ public:
     void SetBirks1(G4double val);
     void SetActivate(G4bool val);
 
+    void AddHitTime(G4double val);
+    void AddHitX(G4double val);
+    void AddHitY(G4double val);
+    void AddHitZ(G4double val);
+
+    void SetNPE_tot(G4int val);
+    void SetNPE_Cer(G4int val);
+    void SetNPE_sct(G4int val);
 
     private:
         static MyAnalysisManager* fInstance;

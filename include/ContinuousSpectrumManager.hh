@@ -34,6 +34,7 @@ class ContinuousSpectrumManager
         G4bool GetActivate()              { return is_activated; }
         void SetMaxEvt(G4int val)         { nMaxEvt = val; }
         G4int GetMaxEvt()                 { return nMaxEvt; }
+        void SetStartEvtId(G4double val)  { nStartEvt = int(val);}
 
         void LoadContinuousSpectrum();
 
@@ -46,6 +47,7 @@ class ContinuousSpectrumManager
         G4String filename;
         G4String treename;
         
+        G4int nStartEvt = 0;
         G4int nMaxEvt = 100;
         G4double edep[100];
         

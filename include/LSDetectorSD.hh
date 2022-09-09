@@ -4,7 +4,8 @@
 
 #include "G4VSensitiveDetector.hh"
 #include "LSDetectorHit.hh"
-#include "LSAnalysisManager.hh"
+//#include "LSAnalysisManager.hh"
+#include "MyAnalysisManager.hh"
 #include "LSDetectorSDMessenger.hh"
 
 class G4Step;
@@ -26,9 +27,11 @@ class LSDetectorSD : public G4VSensitiveDetector
 
     private:
         LSDetectorHitsCollection* fHitsCollection;
-        LSAnalysisManager* analysis;
+        //LSAnalysisManager* analysis;
+        MyAnalysisManager* my_analysis;
 
         LSDetectorSDMessenger* theMessenger;
+
 
     private:
         G4double efficiency;

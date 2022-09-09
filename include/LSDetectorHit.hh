@@ -29,6 +29,9 @@ class LSDetectorHit : public G4VHit
         G4double time;
         G4double edep;
         G4double wavelength;
+        G4double posx;
+        G4double posy;
+        G4double posz;
 
         G4bool isFromCerenkov;
         G4bool isReemission;
@@ -57,6 +60,14 @@ class LSDetectorHit : public G4VHit
         void SetOriginalOP(G4bool flag)             { isOriginalOP = flag; }
         G4bool IsOriginalOP()                       { return isOriginalOP; }
 
+        inline void SetPosX(G4double x)             {posx = x;}
+        inline G4double GetPosX()                   {return posx;}
+
+        inline void SetPosY(G4double y)             {posy = y;}
+        inline G4double GetPosY()                   {return posy;}
+
+        inline void SetPosZ(G4double z)             {posz = z;}
+        inline G4double GetPosZ()                   {return posz;}
 
 };
 

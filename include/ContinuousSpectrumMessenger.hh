@@ -8,6 +8,7 @@ class G4UIcommand;
 class G4UIdirectory;
 class G4UIcmdWithAString;
 class G4UIcmdWithABool;
+class G4UIcmdWithADouble;
 
 class ContinuousSpectrumMessenger : public G4UImessenger
 {
@@ -23,6 +24,7 @@ class ContinuousSpectrumMessenger : public G4UImessenger
         G4UIcmdWithAString*         inFileCmd;
         G4UIcmdWithAString*         inTreeCmd;
         G4UIcmdWithABool*           activateCmd;
+        G4UIcmdWithADouble*         startEvtCmd;
     
 };
 

@@ -31,6 +31,14 @@ class MyRootBasedAnalysis
         inline void Deactivated() { active = false; }
         inline bool IsActivated() { return active; }
 
+        inline void AddHitTime(G4double val) {vec_hit_time.push_back(val);}
+        inline void AddHitX(G4double val) {vec_hit_x.push_back(val);}
+        inline void AddHitY(G4double val) {vec_hit_y.push_back(val);}
+        inline void AddHitZ(G4double val) {vec_hit_z.push_back(val);}
+
+        inline void SetNPE_tot(G4int val) {npe_tot = val;}
+        inline void SetNPE_Cer(G4int val) {npe_Cer = val;}
+        inline void SetNPE_sct(G4int val) {npe_sct = val;}
 
         double calculateQuenched(const G4Step* aStep);
 
@@ -51,6 +59,16 @@ class MyRootBasedAnalysis
         Float_t         pre_z;
         Float_t         edep;
         Float_t         qedep;
+        Float_t         track_length;
+
+        Int_t           npe_tot;
+        Int_t           npe_Cer;
+        Int_t           npe_sct;
+
+        std::vector<Float_t> vec_hit_time;
+        std::vector<Float_t> vec_hit_x;
+        std::vector<Float_t> vec_hit_y;
+        std::vector<Float_t> vec_hit_z;
 
 };
 

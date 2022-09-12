@@ -18,6 +18,9 @@ LSDetectorHit::LSDetectorHit( const LSDetectorHit& right)
 {
     time = right.time;
     edep = right.edep;
+    posx = right.posx;
+    posy = right.posy;
+    posz = right.posz;
     wavelength = right.wavelength;
     trackID = right.trackID;
 
@@ -31,6 +34,9 @@ const LSDetectorHit& LSDetectorHit::operator=(const LSDetectorHit& right)
 {
     time = right.time;
     edep = right.edep;
+    posx = right.posx;
+    posy = right.posy;
+    posz = right.posz;
     wavelength = right.wavelength;
     trackID = right.trackID;
 

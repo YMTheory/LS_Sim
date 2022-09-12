@@ -15,6 +15,7 @@ LSDetectorSDMessenger::LSDetectorSDMessenger(LSDetectorSD* sd)
     effCmd -> SetGuidance("Set efficiency for the sensitive detector.");
     effCmd -> SetParameterName("PDE", true);
     effCmd -> SetDefaultValue(0.18);
+
 }
 
 

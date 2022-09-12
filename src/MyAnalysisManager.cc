@@ -74,4 +74,32 @@ void MyAnalysisManager::SetActivate(G4bool val) {
 
 }
 
+void MyAnalysisManager::AddHitTime(G4double val) {
+    fMyRootBasedAnalysis->AddHitTime(val);
+}
+
+void MyAnalysisManager::AddHitX(G4double val) {
+    fMyRootBasedAnalysis->AddHitX(val);
+}
+
+void MyAnalysisManager::AddHitY(G4double val) {
+    fMyRootBasedAnalysis->AddHitY(val);
+}
+
+void MyAnalysisManager::AddHitZ(G4double val) {
+    fMyRootBasedAnalysis->AddHitZ(val);
+}
+
+
+void MyAnalysisManager::SetNPE_tot(G4int val) {
+    fMyRootBasedAnalysis->SetNPE_tot(val);
+}
+
+void MyAnalysisManager::SetNPE_Cer(G4int val) {
+    fMyRootBasedAnalysis->SetNPE_Cer(val);
+}
+
+void MyAnalysisManager::SetNPE_sct(G4int val) {
+    fMyRootBasedAnalysis->SetNPE_sct(val);
+}
 

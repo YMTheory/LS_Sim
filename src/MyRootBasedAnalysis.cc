@@ -40,6 +40,16 @@ void MyRootBasedAnalysis::BeginOfRunAction()
     fTree = new TTree("sim", "Tree of data events");
     fTree->Branch("edep", &edep, "edep/F");
     fTree->Branch("Qedep", &qedep, "qedep/F");
+    fTree->Branch("trackLength", &track_length, "track_length/F");
+
+    fTree->Branch("npe_tot", &npe_tot, "npe_tot/I");
+    fTree->Branch("npe_Cer", &npe_Cer, "npe_Cer/I");
+    fTree->Branch("npe_sct", &npe_sct, "npe_sct/I");
+
+    fTree->Branch("hit_time", &vec_hit_time);
+    fTree->Branch("hit_x", &vec_hit_x);
+    fTree->Branch("hit_y", &vec_hit_y);
+    fTree->Branch("hit_z", &vec_hit_z);
 
     return;
 
@@ -74,6 +84,15 @@ void MyRootBasedAnalysis::BeginOfEventAction(const G4Event* )
     // Initialization :
     edep = 0.;
     qedep = 0.;
+    track_length = 0.;
+    npe_tot = 0;
+    npe_Cer = 0;
+    npe_sct = 0;
+
+    vec_hit_time    .clear();
+    vec_hit_x       .clear();
+    vec_hit_y       .clear();
+    vec_hit_z       .clear();
 
     //------- add your codes down here
     //
@@ -110,6 +129,9 @@ void MyRootBasedAnalysis::PostTrackingAction(const G4Track* aTrack)
     if (!active)
         return;
 
+    if (aTrack->GetTrackID() == 1) {
+        track_length = aTrack->GetTrackLength() *mm;
+    }
     //------- add your codes down here
     //
     return;

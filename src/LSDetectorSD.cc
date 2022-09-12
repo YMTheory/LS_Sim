@@ -20,7 +20,9 @@ LSDetectorSD::LSDetectorSD( const G4String& name,
 {
     collectionName.insert(hitsCollectionName);
 
-    analysis = LSAnalysisManager::getInstance();
+    //analysis = LSAnalysisManager::getInstance();
+
+    my_analysis = MyAnalysisManager::GetInstance();
 
     theMessenger = new LSDetectorSDMessenger(this); 
 
@@ -73,6 +75,9 @@ G4bool LSDetectorSD::ProcessHits( G4Step* aStep, G4TouchableHistory*)
 
     G4double wavelength = 1240. * 1e6 / edep;
     G4double time = postStepPoint->GetGlobalTime();
+    G4double posx = postStepPoint->GetPosition().x();
+    G4double posy = postStepPoint->GetPosition().y();
+    G4double posz = postStepPoint->GetPosition().z();
     G4bool is_from_cerenkov = false;
     G4bool is_reemission = false;
     G4bool is_original_op = false;
@@ -95,6 +100,9 @@ G4bool LSDetectorSD::ProcessHits( G4Step* aStep, G4TouchableHistory*)
     LSDetectorHit* hit = new LSDetectorHit();
     hit->SetTrackID(trackID);
     hit->SetTime(time);
+    hit->SetPosX(posx);
+    hit->SetPosY(posy);
+    hit->SetPosZ(posz);
     hit->SetEdep(edep);
     hit->SetWavelength(wavelength);
     hit->SetFromCerenkov(is_from_cerenkov);
@@ -120,6 +128,12 @@ void LSDetectorSD::EndOfEvent(G4HCofThisEvent*)
        if ((*fHitsCollection)[i]->IsReemission())   nofSctHits += 1;
        if ((*fHitsCollection)[i]->IsOriginalOP())   nofOP += 1;
        //(*fHitsCollection)[i] -> Print();
+       // PEs positions and hittime:
+       my_analysis->AddHitTime((*fHitsCollection)[i]->GetTime());
+       my_analysis->AddHitX((*fHitsCollection)[i]->GetPosX());
+       my_analysis->AddHitY((*fHitsCollection)[i]->GetPosY());
+       my_analysis->AddHitZ((*fHitsCollection)[i]->GetPosZ());
+
     }
          //for ( G4int i=0; i<nofHits; i++ ) (*fHitsCollection)[i]->Print();
 
@@ -129,9 +143,12 @@ void LSDetectorSD::EndOfEvent(G4HCofThisEvent*)
     //       << nofOP << " ======= !"
     //       << G4endl;
 
-    analysis -> analyseTotNPE(nofHits);
-    analysis -> analyseCerNPE(nofCerHits);
-    analysis -> analyseSctNPE(nofSctHits);
+    //analysis -> analyseTotNPE(nofHits);
+    //analysis -> analyseCerNPE(nofCerHits);
+    //analysis -> analyseSctNPE(nofSctHits);
+    my_analysis -> SetNPE_tot(nofHits);
+    my_analysis -> SetNPE_Cer(nofCerHits);
+    my_analysis -> SetNPE_sct(nofSctHits);
 
 }
 

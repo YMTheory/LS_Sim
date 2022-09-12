@@ -11,6 +11,8 @@
 #include "globals.hh"
 #include "G4ThreeVector.hh"
 
+#include "LSDetectorConstructionMessenger.hh"
+
 class G4VPhysicalVolume;
 class G4LogicalVolume;
 class G4Material;
@@ -53,6 +55,12 @@ class LSDetectorConstruction : public G4VUserDetectorConstruction
         G4double coeff_abslen;
         G4double coeff_rayleigh;
         G4double coeff_efficiency;
+
+    public:
+        void Set_scaleRayL(G4double val) { coeff_rayleigh = val;}
+
+    private:
+        LSDetectorConstructionMessenger* theMessenger;
 };
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

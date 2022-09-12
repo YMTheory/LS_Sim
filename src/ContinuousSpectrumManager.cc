@@ -34,12 +34,14 @@ void ContinuousSpectrumManager::LoadContinuousSpectrum()
 {
     TFile* ff = new TFile(filename, "read");
     TTree* tt = (TTree*)ff->Get(treename);
-    G4cout << "Tree entry = " << tt->GetEntries() << G4endl;
+    G4cout << "Tree entry = " << tt->GetEntries() 
+           << " --> Loading from " << nStartEvt << " to " << nStartEvt+nMaxEvt << G4endl;
     double m_edep;
     tt->SetBranchAddress("edep", &m_edep);
-    for (int i=0; i<nMaxEvt; i++) {
+    for (int i=nStartEvt; i<nStartEvt+nMaxEvt; i++) {
         tt->GetEntry(i);
-        edep[i] = m_edep;
+        edep[i - nStartEvt] = m_edep;
+        G4cout << edep[i - nStartEvt] << " ";
     }
 }
 

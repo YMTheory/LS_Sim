@@ -25,6 +25,7 @@
 #include "G4MultiFunctionalDetector.hh"
 #include "G4VPrimitiveScorer.hh"
 #include "G4PSDoseDeposit.hh"
+#include "G4GDMLParser.hh"
 
 #include "OpticalProperty.icc"
 
@@ -40,7 +41,7 @@ LSDetectorConstruction::LSDetectorConstruction()
     fCheckOverlaps(true), air(NULL), water(NULL), LS(NULL), Steel(NULL),
     coeff_abslen(2.862), coeff_rayleigh(0.643), coeff_efficiency(0.5)
 { 
-;
+    theMessenger = new LSDetectorConstructionMessenger(this);
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -56,8 +57,11 @@ G4VPhysicalVolume* LSDetectorConstruction::Construct()
 {   
 
     DefineMaterials();
+    G4VPhysicalVolume* fPhysWorld = DefineVolumes();
+    //G4GDMLParser* parser = new G4GDMLParser();
+    //parser->Write("./det.gdml", fPhysWorld, false);
 
-    return DefineVolumes();
+    return fPhysWorld;
 }
 
 void LSDetectorConstruction::ModifyOpticalProperty()
@@ -396,6 +400,7 @@ G4VPhysicalVolume* LSDetectorConstruction::DefineVolumes()
     //new G4LogicalSkinSurface("photocathode_logsurf", 
     //                        logicDet,
     //                        Photocathode_opsurf);
+
 
 
     return worldPV;
